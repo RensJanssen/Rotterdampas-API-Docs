@@ -273,6 +273,73 @@ A multipart request containing an image under fieldname "image".
 
 ## Get settings
 
+Returns all settings for the current authenticated user.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getsettings/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getsettings/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+
+> Response
+
+```json
+{
+   "preference_sports": 0,
+   "email_partner_reaction": false,
+   "preference_making_fun": 0,
+   "email_last_minute": false,
+   "email_review_invitation": true,
+   "preference_eating_drinking": 1,
+   "notification_personal_tips": true,
+   "notification_review_invitation": false,
+   "notification_action": true,
+   "preference_learn": -1,
+   "email_pass_information": true,
+   "preference_tour": 1,
+   "preference_watching_listening": -1,
+   "notification_last_minute": false,
+   "preference_relax": 0,
+   "email_personal_tips": true
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find any settings of the given Pashouder.
+500 | No values in the basic authentication.
+200 | Everything is ok.
+
+
 > Response
 
 ```json
@@ -295,12 +362,93 @@ A multipart request containing an image under fieldname "image".
 ```
 > preferences are based on the pillar enum and a floating point value from -1.0 to 1.0.
 
-Returns all settings for the current authenticated user.
 
 ### Request
 `GET /api/{version}/users/me/settings`
 
 ## Update settings
+
+Update settings for the current authenticated user.
+
+```
+Request endpoint Acceptatie:
+PUT https://rotterdampas-acc.passcloud.nl/rest/putsettings/
+Request endpoint Productie:
+PUT https://rotterdampas.passcloud.nl/rest/putsettings/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+preference_making_fun | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
+preference_eating_drinking | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
+preference_tour | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
+preference_watching_listening | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
+preference_learn | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
+preference_sports | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
+preference_relax | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
+notification_last_minute | boolean | optioneel | current value |  				
+notification_review_invitation | boolean | optioneel | current value | 
+notification_personal_tips | boolean | optioneel | current value | 
+notification_action | boolean | optioneel | current value | 
+email_last_minute | boolean | optioneel | current value | 
+email_review_invitation | boolean | optioneel | current value | 
+email_personal_tips | boolean | optioneel | current value | 
+email_partner_reaction | boolean | optioneel | current value | 
+email_pass_information | boolean | optioneel | current value | 
+
+> Response
+
+```json
+{
+   "preference_sports": 0,
+   "email_partner_reaction": false,
+   "preference_making_fun": -1,
+   "email_last_minute": true,
+   "email_review_invitation": true,
+   "preference_eating_drinking": -1,
+   "notification_personal_tips": true,
+   "notification_review_invitation": false,
+   "notification_action": false,
+   "preference_learn": 1,
+   "email_pass_information": true,
+   "preference_tour": -1,
+   "preference_watching_listening": 0,
+   "notification_last_minute": true,
+   "preference_relax": 1,
+   "email_personal_tips": false
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find any settings of the given Pashouder.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Request & Response
 
@@ -322,15 +470,59 @@ Returns all settings for the current authenticated user.
   }
 }
 ```
-> preferences are based on the pillar enum and a floating point value from -1.0 to 1.0. 
-
-Update settings for the current authenticated user.
+> preferences are based on the pillar enum and a floating point value from -1.0 to 1.0.
 
 ### Request
 `PUT /api/{version}/users/me/settings`
 
 
 ## Add Device id
+
+Register a new device id to the users account.
+
+```
+Request endpoint Acceptatie:
+POST https://rotterdampas-acc.passcloud.nl/rest/postdevice/
+Request endpoint Productie:
+POST https://rotterdampas.passcloud.nl/rest/postdevice/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+device_id | string | verplicht | - | The id of the device.
+type_ | string | verplicht | - | Type can be 'android' or 'ios'. 
+
+> Response: returns only a status code.
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Request
 
@@ -766,6 +958,102 @@ Code | Description
 
 Returns all actions related to this actions based on tags and usage.
 
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getrelatedactions/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getrelatedactions/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+id_ | integer | verplicht | - | ID number of the specific action.
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+meta | boolean | optioneel | false | If set, the body will not contain the results but just the meta data for this call.
+pijler_naam | string | optioneel | - | Specifies the type of actions.
+latitude | float | optioneel | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
+longitude | float | optioneel | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
+
+> Response
+
+```json
+{
+  "page_size": 10,
+  "get_related_actions_meta_actions": [{
+    "get_related_actions_actions_locations": [	 {
+		"id_": 545,
+		"title": "Amsterdam",
+		"street": "straat",
+		"zipcode": "4444 ZZ",
+		"street_number": 44,
+		"region": "Zuid-Holland",
+		"latitude": 999999,
+		"longitude": 999999,
+	}],
+    "get_related_actions_actions_offers": [	  {
+		"title": "Titel"
+		"percentage": 4.75,
+		"amount": 7.95,
+	}],
+    "has_user_shared_experience": false,
+    "get_related_actions_actions_partners": [{
+		"region": "Amsterdam",
+		"phone_number": "010-1234567",
+		"zipcode": "1102 AX",
+		"street": "Raoul Wallenbergstraat ",
+		"name": "Stadsloket Oost",
+		"street_number": "43",
+		"id_": 10238,
+		"url": "www.example.com",
+		"email_address": "contact@stichtingjuliusleeft.nl"
+    }],
+    "title": "Volledige Vergoeding NIK 1 Stadspas Extra Korting",
+    "end_date": 1751407199000,
+    "short_description": "NIK Stadspas 1",
+    "pillar": "Dienstverlening",
+    "id_": 30440,
+    "is_user_wishlist_item": false,
+    "has_user_consumed_action": true,
+    "start_date": 1433196000000
+  }],
+  "page": 1,
+  "total_records": 1
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find the action with these parameters.
+404 | Can't find any tags linked to the action.
+500 | No values in the basic authentication.
+200 | Everything is ok.
+
 > Reponse
 
 ```json
@@ -836,7 +1124,75 @@ meta | true | false | If set, the body will not contain the results but just the
 
 # Reviews
 
-## Get reviews
+## Get action reviews
+
+Returns all reviews of an "Actie". Sorted by date added, descending.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getactionreview/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getactionreview/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+action_id | integer | verplicht | - | ID number of the specific action.
+meta | boolean | optioneel | false | If set, the body will not contain the results but just the meta data for this call.
+
+> Response
+
+```json
+{
+  "get_action_reviews_meta_reviews": [{
+    "author": "R Janssen",
+    "title": "Test Review #3",
+    "is_user_review": true,
+    "description": "Een stukje tekst",
+    "rating": 7,
+    "id_": 1,
+    "post_date": 1444643804811
+  }],
+  "page_size": 1,
+  "average_review": 4.86,
+  "page": 1,
+  "total_records": 5
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find the action related to the parameter 'action_id'.
+404 | Can't find any reviews that belong to the related action.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Response
 
@@ -865,14 +1221,74 @@ meta | true | false | If set, the body will not contain the results but just the
 }
 ```
 
-Returns all reviews of an "Actie". Sorted by date added, descending.
-
 ### Request
 
 `GET /api/{version}/actions/{id}/reviews`
 
 
 ## Add review
+
+Creates a review and returns it.
+
+```
+Request endpoint Acceptatie:
+POST https://rotterdampas-acc.passcloud.nl/rest/postreview/
+Request endpoint Productie:
+POST https://rotterdampas.passcloud.nl/rest/postreview/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+action_id | integer | verplicht | - | ID number of the specific action.
+title | string | verplicht | - | The title of the new review.
+rating | float | verplicht | - | The rating of the new review.
+description | string | optioneel | - | The description of the review.
+
+> Response
+
+```json
+{
+  "author": "R Janssen",
+  "title": "Test Review #3",
+  "is_user_review": true,
+  "description": "Een stukje tekst",
+  "rating": 7,
+  "id_": 1,
+  "post_date": 1444643820634
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find the action related to the parameter 'action_id'.
+500 | Internal server error while creating a new review.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Request
 
@@ -902,8 +1318,6 @@ Returns all reviews of an "Actie". Sorted by date added, descending.
 }
 ```
 
-Creates a review and returns it.
-
 ### Request
 
 `POST /api/{version}/actions/{id}/reviews`
@@ -930,6 +1344,66 @@ Deletes an image belonging to the review.
 ## Update Review
 
 Updates the users review.
+
+```
+Request endpoint Acceptatie:
+PUT https://rotterdampas-acc.passcloud.nl/rest/putreview/
+Request endpoint Productie:
+PUT https://rotterdampas.passcloud.nl/rest/putreview/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+title | string | verplicht | - | The (new) title of the review.
+rating | float | verplicht | - | The (new) rating of the review.
+review_id | integer | verplicht | - | The id number of the review that the users wants to update.
+description | string | optioneel | - | The (new) description of the review.
+
+> Response
+
+```json
+{
+  "author": "R Janssen",
+  "title": "Review #5",
+  "is_user_review": true,
+  "description": "een groter stukje tekst",
+  "rating": 5,
+  "id_": 1,
+  "post_date": 1444643820634
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find a review with the given id that is linked to this user. 
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Request
 
@@ -971,9 +1445,103 @@ Updates the users review.
 
 # User
 
-## Get actions
+## Get user actions
 
 Returns the actions consumed by the current user ordered by consumption date.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getuseractions/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getuseractions/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+meta | boolean | optioneel | false | If set, the body will not contain the results but just the meta data for this call.
+include_family | boolean | optioneel | false | If set, the result will include the actions consumed by the users family.
+year | integer | optioneel | - | If included, the results will constrained to the specific “pass year”.
+
+> Response
+
+```json
+{
+  "page_size": 1,
+  "page": 1,
+  "get_user_actions_meta_actions": [{
+    "has_user_shared_experience": false,
+    "consumption_date": 1433376000000,
+    "get_user_actions_actions_partners": [{
+      "region": "Amsterdam",
+      "phone_number": "020 820 8122",
+      "zipcode": "1053 RT",
+      "street": "Hannie Dankbaarpassage",
+      "name": "De Filmhallen",
+      "street_number": "12",
+      "id_": 10235,
+      "url": "http://www.filmhallen.nl",
+      "email_address": "bob@themovies.nl"
+    }],
+    "end_date": 1441058399000,
+    "title": "Gratis naar film1",
+    "get_user_actions_actions_offers": [	{
+		"title": "Titel",
+		"percentage": 4.75,
+		"amount": 9.95,
+	}],
+    "short_description": "Gratis naar de Filmhallen",
+    "get_user_actions_actions_locations": [	{
+		"id_": 545,
+		"title": "Amsterdam",
+		"street": "straat",
+		"zipcode": "4444 ZZ",
+		"street_number": 44,
+		"region": "Zuid-Holland",
+		"latitude": 999999,
+		"longitude": 999999, 
+	}],
+    "pillar": "Cultuur",
+    "id_": 557,
+    "is_user_wishlist_item": false,
+    "start_date": 1422745200000
+  }],
+  "total_records": 6
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find a pass.
+404 | Can't find any usage.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Reponse
 
@@ -1047,6 +1615,64 @@ year | true | - | If included, the results will constrained to the specific "pas
 
 ## Get current authenticated user
 
+Returns all data specific to the logged in user. Excluding wishlists, devices and savings.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getcurrentauthenticateduser/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getcurrentauthenticateduser/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+
+> Response
+
+```json
+{
+  "username": "pietjepuk@gmail.com",
+  "currently_active": true,
+  "initials": "R",
+  "amount_reviews": 6,
+  "last_name": "Janssen",
+  "passnumber": 2,
+  "id_": 174739,
+  "amount_actions_consumed": 6
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+500 | No values in the basic authentication.
+500 | Internal server error while creating a response.
+200 | Everything is ok.
+
 > Response
 
 ```json
@@ -1063,13 +1689,76 @@ year | true | - | If included, the results will constrained to the specific "pas
 }
 ```
 
-
-Returns all data specific to the logged in user. Excluding wishlists, devices and savings.
-
 ### Request
 `GET /api/{version}/users/me`
 
-## Get reviews
+## Get user reviews
+
+Returns all reviews for the current authenticated user.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getuserreview/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getuserreview/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+
+> Response
+
+```json
+{
+  "meta_get_user_reviews": [{
+    "author": "pietjepuk@gmail.com",
+    "title": "Title",
+    "is_user_review": true,
+    "reviews_get_user_reviews_actions": [{"id_": 270}],
+    "description": "Een stukje tekst",
+    "rating": 4,
+    "id_": 3,
+    "post_date": 1444727339056
+  }],
+  "page_size": 1,
+  "average_review": 4.716666666666667,
+  "page": 1,
+  "total_records": 6
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find any reviews for this user.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Response
 
@@ -1101,8 +1790,6 @@ Returns all data specific to the logged in user. Excluding wishlists, devices an
 }
 ```
 > The action field includes just an ID, but could include more data if the view requires it. (To be discussed)
-
-Returns all reviews for the current authenticated user.
 
 ### Request
 `GET /api/{version}/users/me/reviews`
@@ -1346,6 +2033,104 @@ A user can delete a finished "Actie" and its savings manually.
 
 ## Get Wishlists
 
+Returns all wishlists including a few of their actions.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getwishlists/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getwishlists/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+amount_actions | boolean | optioneel | false | If set, returns this amount of actions per wishlist.
+
+> Response
+
+```json
+{
+   "meta_get_wishlists":    [   {
+         "title": "6666",
+         "id_": 1,
+         "get_wishlists_wishlists_action_amount": [],
+         "get_wishlists_wishlists_actions": [         {
+            "has_user_shared_experience": true,
+            "get_wishlists_actions_locations": [	{
+				"id_": 512,
+				"title": "Titel",
+				"street": "Hoofdstraat",
+				"zipcode": "3501 BC",
+				"street_number": "18",
+				"region": "Amsterdam",
+				"longitude": 57.00120155,
+				"latitude": 12.25369844,
+			}],
+            "get_wishlists_actions_offers": [	{
+				"title": "Titel",
+				"percentage": 4.75,
+				"amount": 9.95,
+			}],
+            "title": "Stadspasje Aanb. A",
+            "end_date": 1441058399000,
+            "short_description": "Stadspas Aanbieding 100% Korting",
+            "pillar": "Cultuur",
+            "id_": 30274,
+            "get_wishlists_actions_partners": [            {
+               "region": "Amsterdam",
+               "phone_number": "020 763 0599",
+               "zipcode": "1082 ME",
+               "street": "G. Mahlerlaan",
+               "name": "Amsterdam Expo BV",
+               "street_number": "106",
+               "id_": 10234,
+               "url": "http://www.amsterdamexpo.nl",
+               "email_address": "arnold.vandewater@terminal1.nl"
+            }],
+            "is_user_wishlist_item": true,
+            "has_user_consumed_action": false,
+            "start_date": 1422745200000
+         }]
+      }],
+   "page_size": 1,
+   "page": 1,
+   "total_records": 3
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find any wishlists that are connected to the user.
+500 | No values in the basic authentication.
+200 | Everything is ok.
+
 > Response
 
 ```json
@@ -1412,8 +2197,6 @@ A user can delete a finished "Actie" and its savings manually.
 
 ```
 
-Returns all wishlists including a few of their actions.
-
 ### Request
 
 `GET /api/{versions}/users/me/wishlists`
@@ -1426,6 +2209,98 @@ amount_actions | true | 3 | If set, returns this amount of actions per wishlist.
 
 
 ## Get Wishlist
+
+Returns a specific wislist and all of its actions.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getwishlist/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getwishlist/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+id_ | integer | verplicht | - | ID number of the specific action.
+
+> Response
+
+```json
+{
+   "title": "Wenslijst #1",
+   "get_wishlist_actions_actions": [   {
+      "get_wishlist_actions_partners": [      {
+         "region": "Amsterdam",
+         "phone_number": "020 763 0599",
+         "zipcode": "1082 ME",
+         "street": "G. Mahlerlaan",
+         "name": "Amsterdam Expo BV",
+         "street_number": "106",
+         "id_": 10234,
+         "url": "http://www.amsterdamexpo.nl",
+         "email_address": "arnold.vandewater@terminal1.nl"
+      }],
+      "has_user_shared_experience": true,
+      "title": "Stadspasje Aanb. A",
+      "end_date": 1441058399000,
+      "short_description": "Stadspas Aanbieding 100% Korting",
+      "get_wishlist_actions_offers": [	{
+		"title": "Titel",
+		"percentage": 4.75,
+		"amount": 9.95,
+	  }],
+      "pillar": "Cultuur",
+      "id_": 270,
+      "is_user_wishlist_item": true,
+      "has_user_consumed_action": false,
+      "start_date": 1422745200000,
+      "get_wishlist_actions_locations": [	{
+		"id_": 15,
+		"title": "Titel",
+		"street": "Hoofdstraat",
+		"zipcode": "3501 BC",
+		"street_number": "18",
+		"region": "Amsterdam",
+		"latitude": 57.0001254,
+		"longitude": 1.20498867,
+	  }]
+   }],
+   "id_": 1
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find a wishlist related to the parameter 'id_'.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Response
 
@@ -1483,12 +2358,63 @@ amount_actions | true | 3 | If set, returns this amount of actions per wishlist.
 }
 ```
 
-Returns a specific wislist and all of its actions.
-
 ### Request
 `GET /api/{versions}/users/me/wishlists/{id}`
 
-## Add Wishlist
+## Post Wishlist
+
+Creates a new wishlist.
+
+```
+Request endpoint Acceptatie:
+POST https://rotterdampas-acc.passcloud.nl/rest/postwishlist/
+Request endpoint Productie:
+POST https://rotterdampas.passcloud.nl/rest/postwishlist/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+title | string | verplicht | - | The title of the new wishlist.
+
+> Response
+
+```json
+{
+  "title": "wishlist#1",
+  "id_": 1,
+  "post_wishlist_response_actions": []
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Request
 
@@ -1507,14 +2433,67 @@ Returns a specific wislist and all of its actions.
   "actions": []
 }
 ```
-
-Creates a new wishlist.
 
 ### Request
 `POST /api/{versions}/users/me/wishlists`
 
 ## Update Wishlist
 
+Updates the wishlist and its parameters. 
+
+```
+Request endpoint Acceptatie:
+PUT https://rotterdampas-acc.passcloud.nl/rest/putwishlist/
+Request endpoint Productie:
+PUT https://rotterdampas.passcloud.nl/rest/putwishlist/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+title | string | verplicht | - | The new title of the wishlist.
+id_ | integer | verplicht | - | The id number of the wishlist.
+
+> Response
+
+```json
+{
+  "title": "Een nieuwe titel",
+  "id_": 1,
+  "put_wishlist_response_actions": []
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find a wishlist with the given id.
+500 | No values in the basic authentication.
+200 | Everything is ok.
+
 > Request
 
 ```json
@@ -1533,12 +2512,58 @@ Creates a new wishlist.
 }
 ```
 
-Updates the wishlist and its parameters. 
-
 ### Request
 `PUT /api/{versions}/users/me/wishlists/{id}`
 
 ## Add action to wishlist
+
+Adds an action to a wishlist
+
+```
+Request endpoint Acceptatie:
+POST https://rotterdampas-acc.passcloud.nl/rest/postactiontowishlist/
+Request endpoint Productie:
+POST https://rotterdampas.passcloud.nl/rest/postactiontowishlist/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+action_id | integer | verplicht | - | The id number of the action.
+wishlist_id | integer | verplicht | - | The is number of the wishlist.
+
+> Response: Only returns a status code.
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find a wishlist for the given id.
+404 | Can't find an action for the given id.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 > Request
 
@@ -1547,7 +2572,6 @@ Updates the wishlist and its parameters.
   "action_id": 1
 }
 ```
-Adds an action to a wishlist
 
 ### Request
 
@@ -1562,6 +2586,55 @@ Deletes an authenticated users wishlist.
 
 ## Remove action from wishlist
 
+Removes an action from a wishlist
+
+```
+Request endpoint Acceptatie:
+DELETE https://rotterdampas-acc.passcloud.nl/rest/deleteactiontowishlist/
+Request endpoint Productie:
+DELETE https://rotterdampas.passcloud.nl/rest/deleteactiontowishlist/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+action_id | integer | verplicht | - | The id number of the action.
+wishlist_id | integer | verplicht | - | The is number of the wishlist.
+
+> Response: Only returns a status code.
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+404 | Can't find a wishlist for the given id.
+404 | Can't find an action for the given id.
+404 | Can't find the wishlist item.
+500 | No values in the basic authentication.
+200 | Everything is ok.
+
 > Request
 
 ```json
@@ -1569,8 +2642,6 @@ Deletes an authenticated users wishlist.
   "action_id": 1
 }
 ```
-
-Removes an action from a wishlist
 
 ### Request
 
@@ -1582,6 +2653,74 @@ Removes an action from a wishlist
 
 Returns all the passes of the current user.
 
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getpasses/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getpasses/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+include_family | boolean | optioneel | false | If set, the result will include the passes of the users family.
+
+> Response
+
+```json
+{
+  "page_size": 20,
+  "page": 1,
+  "get_passes_meta_passes": [
+    {
+      "end_date": 1451606399000,
+      "owner_name": "K. Janssen",
+      "active": true,
+      "number": 6.011011329443E12,
+      "id_": 175310
+    },
+    {
+      "end_date": 1483228799000,
+      "owner_name": "R Janssen",
+      "active": true,
+      "number": 6.011011325987E12,
+      "id_": 175309
+    }
+  ],
+  "total_records": 2
+}
+```
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+500 | No values in the basic authentication.
+200 | Everything is ok.
 
 ### Request
  
