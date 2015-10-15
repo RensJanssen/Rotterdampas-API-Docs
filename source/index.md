@@ -78,6 +78,50 @@ User management will be specified when the authentication research has concluded
 
 ## Login
 
+### Get Login
+
+Checks the account name and password.
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getlogin/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getlogin/
+```
+
+```
+Authentication in Acceptatie: Basic authentication with a rest user.
+username: wsrest2
+password: Intermediad!2
+```
+
+```
+Authentication in Productie will follow after testing.
+```
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+pass_owner_code | string | verplicht | - | The code of the 'Organization'.
+api_version | float | verplicht | - | The version number of the API.
+pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
+account_login | string | verplicht | - | The inlog name of the Pashouder.
+account_password | string | verplicht | - | The password of the Pashouder.
+
+> Response: Only returns a status code.
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters are empty.
+400 | Can't find the PasSoort.
+401 | Can't find the organization.
+401 | Wrong values in the basic authentication.
+401 | Can't verify Pashouder.
+404 | Can't find the Pashouder.
+500 | No values in the basic authentication.
+200 | Everything is ok.
+
 ## Registration
 
 Includes all the user info like name, e-mail adress and pass number.
