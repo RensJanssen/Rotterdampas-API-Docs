@@ -41,7 +41,7 @@ Caching should be used whenever possible. This reduces server load significantly
 
 # Versioning
 
-The version is determined by the version number that is passed as a parameter in the request.
+The versioning is added in a Header that is called "api_version".
 
 The API should be versioned in order to allow for multiple versions of the app. This way we can migrate to a new version without disabling functionality for users that have not updated yet. The versioning scheme should be relatively simple. For example: `/api/v1/actions`
 
@@ -261,6 +261,8 @@ A multipart request containing an image under fieldname "image".
 
 ## Get settings
 
+### Request
+
 Returns all settings for the current authenticated user.
 
 ```
@@ -270,25 +272,19 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getsettings/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
 
 ### Parameters
 
-Parameter | Type | Optional | Default | Description
---------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
+There are no parameters for this call.
 
 > Response
 
@@ -317,44 +313,19 @@ account_password | string | verplicht | - | The password of the Pashouder.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find any settings of the given Pashouder.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
 
-
-> Response
-
-```json
-{
-  "notification_last_minute": true,
-  "notification_review_invitation": true,
-  "notification_personal_tips": true,
-  "notification_action": true,
-  "email_last_minute": true,
-  "email_review_invitation": true,
-  "email_personal_tips": true,
-  "email_partner_reaction": true,
-  "email_pass_information": true,
-  "preferences" : {
-      "1": 0.0,
-      "2": -1.0,
-      "3": 1.0
-  }
-}
-```
 > preferences are based on the pillar enum and a floating point value from -1.0 to 1.0.
 
 
-### Request
-`GET /api/{version}/users/me/settings`
-
 ## Update settings
+
+### Request
 
 Update settings for the current authenticated user.
 
@@ -365,25 +336,19 @@ Request endpoint Productie:
 PUT https://rotterdampas.passcloud.nl/rest/putsettings/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 preference_making_fun | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
 preference_eating_drinking | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
 preference_tour | float | optioneel | current value | Options are: 1 = meer, 0 = gemiddeld, -1 = minder
@@ -428,41 +393,15 @@ email_pass_information | boolean | optioneel | current value |
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find any settings of the given Pashouder.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any settings that belongs to this user.
 200 | Everything is ok.
 
-> Request & Response
-
-```json
-{
-  "notification_last_minute": true,
-  "notification_review_invitation": true,
-  "notification_personal_tips": true,
-  "notification_action": true,
-  "email_last_minute": true,
-  "email_review_invitation": true,
-  "email_personal_tips": true,
-  "email_partner_reaction": true,
-  "email_pass_information": true,
-  "preferences" : {
-      "1": 0.0,
-      "2": -1.0,
-      "3": 1.0
-  }
-}
-```
 > preferences are based on the pillar enum and a floating point value from -1.0 to 1.0.
-
-### Request
-`PUT /api/{version}/users/me/settings`
-
 
 ## Add Device id
 
@@ -475,42 +414,14 @@ Request endpoint Productie:
 POST https://rotterdampas.passcloud.nl/rest/postdevice/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
-
-### Parameters
-
-Parameter | Type | Optional | Default | Description
---------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
-device_id | string | verplicht | - | The id of the device.
-type_ | string | verplicht | - | Type can be 'android' or 'ios'. 
-
-> Response: returns only a status code.
-
-### Status code
-
-Code | Description
----- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
-401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-500 | No values in the basic authentication.
-200 | Everything is ok.
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 > Request
 
@@ -520,11 +431,26 @@ Code | Description
   "type": "android"
 }
 ```
-> Type can be "android" or "ios"
 
-> Response
+### Parameters
 
-> A status code should be enough.
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+device_id | string | verplicht | - | The id of the device.
+type_ | string | verplicht | - | Type can be 'android' or 'ios'. 
+
+> Response: returns only a status code.
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+200 | Everything is ok.
 
 
 Register your device id for notifications.
