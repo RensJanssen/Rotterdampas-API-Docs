@@ -25,7 +25,8 @@ All requests and respons bodies (except when specifically stated otherwise) are 
 
 # Authentication
 
-All webservices's have a basic authentication. In Acceptatie the credentials are:
+In every service there is a basic authentication. And in almost all others there is also a Token verification. This will be set in header with header name 'X-AUTHENTICATION-TOKEN'. A Token can be retrieved with the REST API GetToken.
+In Acceptatie the credentials of the basic authentication are:
 ```
 login name: wsrest2
 password: Intermediad!2
@@ -78,48 +79,49 @@ User management will be specified when the authentication research has concluded
 
 ## Login
 
-### Get Login
+### Get Token
 
-Checks the account name and password.
+Checks the account name and password and returns a token. 
 
 ```
 Request endpoint Acceptatie:
-GET https://rotterdampas-acc.passcloud.nl/rest/getlogin/
+GET https://rotterdampas-acc.passcloud.nl/rest/gettoken/
 Request endpoint Productie:
-GET https://rotterdampas.passcloud.nl/rest/getlogin/
+GET https://rotterdampas.passcloud.nl/rest/gettoken/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Default | Description
+------ | ------- | -----------
+pass_owner_code | APAS | The code of the 'Organization'.
+api_version | 1 | The version number of the API.
+pass_type_number | 354 | The number of the 'PasSoort'.
 
-### Parameters
+#### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
+account_login | string | false | - | The inlog name of the user.
+account_password | string | false | - | The password for login.
 
-> Response: Only returns a status code.
+
+> Response
+
+```json
+{
+  "token": "JmlVy3BLx86Hxb23iBGMuD1cfHp7GU9d1XrmwVLVpp3Iu5XqU63TLx2AoqoaZ0sh",
+  "account_login": "pietjepuk@gmail.com"
+}
+```
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
+403 | Can't find the PasSoort.
+403 | Can't find the organization.
 404 | Can't find the Pashouder.
-500 | No values in the basic authentication.
 200 | Everything is ok.
 
 ## Registration
@@ -139,24 +141,20 @@ Request endpoint Productie:
 PUT https://rotterdampas.passcloud.nl/rest/putregister/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Default | Description
+------ | ------- | -----------
+pass_owner_code | APAS | The code of the 'Organization'.
+api_version | 1 | The version number of the API.
+pass_type_number | 354 | The number of the 'PasSoort'.
+
 
 #### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | false | - | The code of the 'Organization'.
-api_version | float | false | - | The version number of the API.
-pass_type_number | integer | false | - | The number of the 'PasSoort'.
-account_password | string | false | - | A password for login.
+password | string | false | - | A password for login.
 email_address | string | false | - | The emailaddress of the 'Pashouder'. This will be the login name.
 birthdate | string | false | - | The date of birth of the 'Pashouder'.
 passnumber | long | false | - | The number of the pass that belongs to the 'Pashouder'.
@@ -164,26 +162,24 @@ passnumber | long | false | - | The number of the pass that belongs to the 'Pash
 
 > Response
 
-```
-The response will only return a status code.
+```json
+{
+"token": "pU9BnOY5gkXl3J8lLOCMD2psIS8spAoBpvljhzupASzdPeQ35W3Jt5S3w2dJUVap"
+}
 ```
 
 #### Status code
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the 'PasSoort'.
-400 | Error while trying to parse birthdate.
-400 | Error while trying to change the password.
-401 | Can't find the 'organization' of the pass.
-401 | Wrong values in the basic authentication
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+403 | Error while trying to change the password.
 404 | Can't find a Pashouder with the input parameters.
 404 | Can't find a Pas with the 'passnumber' parameter.
-500 | No values in the basic authentication.
 200 | Everything is ok.
-
-
 
 
 ## Update user
@@ -205,104 +201,51 @@ Request endpoint Productie:
 PUT https://rotterdampas.passcloud.nl/rest/putchangepassword/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Default | Description
+------ | ------- | -----------
+X-AUTHENTICATION-TOKEN | - | The personal token of the user.
+pass_owner_code | APAS | The code of the 'Organization'.
+api_version | 1 | The version number of the API.
+pass_type_number | 354 | The number of the 'PasSoort'.
+
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | false | - | The code of the 'Organization'.
-api_version | float | false | - | The version number of the API.
-pass_type_number | integer | false | - | The number of the 'PasSoort'.
-account_password | string | false | - | The old password for login.
-account_login | string | false | - | The inlog name of the Pashouder. Is the users email address.
+old_password | string | false | - | The old password for login.
 new_password | string | false | - | A new password for login.
-passnumber | long | false | - | The number of the pass that belongs to the 'Pashouder'.
-
+email_address | string | false | - | The email/ inlog name of the Pashouder.
 
 > Response
 
 ```
-The response will only return a status code.
+The response will only return a status code. 
 ```
 
 ### Status code
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the 'PasSoort'.
-400 | An error has occured while changing the password.
-401 | Can't find the 'organization' of the pass.
-401 | Wrong values in the basic authentication
-401 | An error has occured while checking the old password.
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | Wrong values in X-AUTHENTICATION-TOKEN authentication.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+403 | Wrong value for the new password.
 404 | Can't find a Pashouder with the input parameters.
-500 | No values in the basic authentication.
 200 | Everything is ok.
-
 
 
 ## Forgot Password
 
 ### PutForgotPassword
 
-Generates a temporary password and return the value.
+Sends an email to the users email address. In this mail the user can click on a link which will link to a website where the user can change his or her password.
 
-### Request
-
-```
-Request endpoint Acceptatie: 
-PUT https://rotterdampas-acc.passcloud.nl/rest/putforgotpassword/
-Request endpoint Productie: 
-PUT https://rotterdampas.passcloud.nl/rest/putforgotpassword/
-```
-
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
-
-### Parameters
-
-Parameter | Type | Optional | Default | Description
---------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | false | - | The code of the 'Organization'.
-api_version | float | false | - | The version number of the API.
-pass_type_number | integer | false | - | The number of the 'PasSoort'.
-account_login | string | false | - | The inlog name of the Pashouder. Is the users email address.
-birthdate | string | false | - | The date of birth of the 'Pashouder'.
-passnumber | long | false | - | The number of the pass that belongs to the 'Pashouder'.
-
-> Response
-
-```json
-{
-  "temp_password": "TG4FmqDtkvZV"
-}
-```
-
-
-### Status code
-
-Code | Description
----- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the 'PasSoort'.
-400 | An error has occured while changing the password.
-401 | Can't find the 'organization' of the pass.
-404 | Can't find a Pashouder with the input parameters.
-500 | Internal server error while creating a temporary 'password'.
-200 | Everything is ok.
-
+This REST API Forgot Password will follow after the implementation of the DeepLink Module in PASS.
 
 
 ## Update user photo
@@ -599,15 +542,47 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getallactions/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+> The date is formatted following ISO 8601: `yyyy-MM-dd'T'HH:mm:ssZZZZZ`
 
-```
-Authentication in Productie will follow after testing. 
-```
+> Offer.type is an enum: 1 = or, 2 = and
+
+This returns the basic information for all the actions that are active right now ordered by `end_date` ascending.
+<aside class="success">
+Remember — The results of this call can also be changed by using one of the global call parameters.
+</aside>
+
+### Filter
+
+<aside class="warning">
+Filters are still a work in progress and open for discussion.
+</aside>
+
+Example — Filters are based on an Enum e.g. "Eten & Drinken" = 1, "Zonder kinderen" = 2 and are sent as a comma seperated string.
+These enums will translate to the "Pijler", Boolean flags of the "Acties", location regions and "Aanbiedingen" values.
+
+`GET /api/{version}/actions?filter=1,3,6`
+
+### Headers
+
+Header | Default | Description
+------ | ------- | -----------
+X-AUTHENTICATION-TOKEN | - | The personal token of the user.
+pass_owner_code | APAS | The code of the 'Organization'.
+api_version | 1 | The version number of the API.
+pass_type_number | 354 | The number of the 'PasSoort'.
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+page | integer | false | - | The result page number.
+per_page | integer | false | - | The count of the results per page.
+meta | boolean | true | false | If set, the body will not contain the results but just the meta data for this call.
+pillar | string | true | - | Specifies the type of actions.
+latitude | float | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
+longitude | float | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
+partner_id | integer | true | - | If set, results are constrained to this partner id.
+action_type | string | true | - | If set, results are constrained to this action type.
 
 > Response
 
@@ -660,133 +635,17 @@ Authentication in Productie will follow after testing.
 }
 ```
 
-> Reponse
-
-```json
-{
-  "meta": {
-    "page": 0,
-    "page_size": 30,
-    "total_records": 4000
-  },
-  "actions": [
-    {
-      "id": 1,
-      "title": "Zin van bewegen",
-      "pillar": "EtenDrinken",
-      "thumbnail": "http://example.com/example.jpg",
-      "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-      "is_user_wishlist_item": true,
-      "has_user_consumed_action": true,
-      "has_user_shared_experience": true,
-      "start_date":"2015-12-09T19:33:00 +0000",
-      "end_date": "2015-12-13T19:33:00 +0000",
-      "offers": {
-        "type": 1,
-        "offer": [
-          {
-            "title": "Voor 5 euro naar de dierentuin",
-            "percentage": 25.0,
-            "amount": 23.0
-          }
-        ]
-      },
-      "partner": {
-        "id": 1,
-        "name": "Spido",
-        "url": "http://spido.nl",
-        "phone_number": "010 42984039",
-        "email_address": "example@spido.nl",
-        "street": "Botenlaan",
-        "zipcode": "2343KJ",
-        "street_number": "45",
-        "region": "Rotterdam"
-      },
-      "locations": [
-        {
-          "id": 1,
-          "title": "Ballenbak",
-          "street": "Jan Luykenlaan",
-          "zipcode": "2343KJ",
-          "street_number": "8",
-          "region": "Rotterdam",
-          "latitude": 4.0000,
-          "longitude": 51.0000
-        }
-      ]
-    }
-  ]
-}
-```
-> The date is formatted following ISO 8601: `yyyy-MM-dd'T'HH:mm:ssZZZZZ`
-
-> Offer.type is an enum: 1 = or, 2 = and
-
-This returns the basic information for all the actions that are active right now ordered by `end_date` ascending.
-<aside class="success">
-Remember — The results of this call can also be changed by using one of the global call parameters.
-</aside>
-
-### Request
-
-`GET /api/{version}/actions`
-
-### Query Parameters
-
-Parameter | Optional | Default | Description
---------- | -------- | ------- | -----------
-latitude | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
-longitude | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
-filter | true | - | If set, the actions are filtered based on a predefined ruleset.
-search | true | - | If set, results are returned based on fuzzy text matching. Ordered by match descending. Overrides all other sorting options.
-partner_id | true | - | If set, results are constrained to this partner id.
-meta | true | false | If set, the body will not contain the results but just the meta data for this call.
-monthly | true | false | If set, the results are constrained to just the "monthly" actions.
-recommended | true | false | If set, constrain the result to actions recommended to the logged in user. 
-
-
-### Filter
-
-<aside class="warning">
-Filters are still a work in progress and open for discussion.
-</aside>
-
-Example — Filters are based on an Enum e.g. "Eten & Drinken" = 1, "Zonder kinderen" = 2 and are sent as a comma seperated string.
-These enums will translate to the "Pijler", Boolean flags of the "Acties", location regions and "Aanbiedingen" values.
-
-
-`GET /api/{version}/actions?filter=1,3,6`
-
-### Parameters
-
-Parameter | Type | Optional | Default | Description
---------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | false | - | The code of the 'Organization'.
-api_version | float | false | - | The version number of the API.
-pass_type_number | integer | false | - | The number of the 'PasSoort'.
-account_password | string | false | -	| The password of the Pashouder.
-account_login | string | false | - | The inlog name of the Pashouder.
-page | integer | false | - | The result page number.
-per_page | integer | false | - | The count of the results per page.
-meta | boolean | true | false | If set, the body will not contain the results but just the meta data for this call.
-pillar | string | true | - | Specifies the type of actions.
-latitude | float | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
-longitude | float | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
-partner_id | integer | true | - | If set, results are constrained to this partner id.
-action_type | string | true | - | If set, results are constrained to this action type.
-
-
 ### Status code
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the 'PasSoort'.
-401 | Can't find the 'organization' of the pass.
-401 | Wrong values in the basic authentication
-404 | Can't find any action with these parameters.
-500 | No values in the basic authentication.
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in basic authentication.
+401 | Wrong values in X-AUTHENTICATION-TOKEN authentication.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
+
 
 
 ## Get Action
@@ -800,15 +659,27 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getaction/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Request
 
-```
-Authentication in Productie will follow after testing.
-```
+`GET /api/{version}/actions/{id}`
+
+### Headers
+
+Header | Default | Description
+------ | ------- | -----------
+X-AUTHENTICATION-TOKEN | - | The personal token of the user.
+pass_owner_code | APAS | The code of the 'Organization'.
+api_version | 1 | The version number of the API.
+pass_type_number | 354 | The number of the 'PasSoort'.
+
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+user_review | boolean | true | false | If set, only returns the review belonging to this user.
+id_ | integer | false | - | ID number of the specific action.
+
 
 > Response
 
@@ -882,107 +753,6 @@ Authentication in Productie will follow after testing.
   "start_date": 1422745200000
 }
 ```
-
-> Response
-
-```json
-{
-  "id": 1,
-  "title": "Zin van bewegen",
-  "pillar": "EtenDrinken",
-  "thumbnail": "http://example.com/example.jpg",
-  "images":[
-    "http://example.com",
-    "http://example.com"
-  ],
-  "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-  "availability_type": 1, (Inwisselbaarheid)
-  "more_information_url": "http://example.com",
-  "more_information_phone_number": "010 403948372",
-  "more_information_email": "john@doe.com",
-  "reservation_url": "http://example.com",
-  "reservation_phone_number": "010 384839284",
-  "reservation_email": "john@doe.com",
-  "flags":{
-    "is_indoors": true,
-    "is_nice_weather": false,
-    "is_bad_weather": false,
-    "is_same_day_consumable": false,
-    "is_child_friendly": true,
-    "is_fun_without_children": false
-  },
-  "tags":[
-    {
-      "title": "waterpret"
-    }
-  ],
-  "average_review": 4.6,
-  "total_reviews": 4000,
-  "is_user_wishlist_item": true,
-  "has_user_consumed_action": true,
-  "has_user_shared_experience": true,
-  "start_date":"2015-12-09T19:33:00 +0000",
-  "end_date": "2015-12-13T19:33:00 +0000",
-  "offers": {
-    "type": 1,
-    "offer": [
-      {
-        "title": "Voor 5 euro naar de dierentuin",
-        "percentage": 25.0,
-        "amount": 23.0,
-        "tariffs":[
-          {
-            "description": "volwassenen",
-            "type": 1,
-            "tariff": "€22,00 > €55,00",
-            "minimum_age": 12,
-            "maximum_age": 18
-          }
-        ]
-      }
-    ]
-  },
-  "partner": {
-    "id": 1,
-    "name": "Spido",
-    "url": "http://spido.nl",
-    "phone_number": "010 42984039",
-    "email_address": "example@spido.nl",
-    "street": "Botenlaan",
-    "zipcode": "2343KJ",
-    "street_number": "45",
-    "region": "Rotterdam"
-  },
-  "locations": [
-    {
-      "id": 1,
-      "title": "Ballenbak",
-      "street": "Jan Luykenlaan",
-      "zipcode": "2343KJ",
-      "street_number": "8",
-      "region": "Rotterdam",
-      "latitude": 4.0000,
-      "longitude": 51.0000
-    }
-  ]
-}
-```
-
-### Request
-
-`GET /api/{version}/actions/{id}`
-
-### Parameters
-
-Parameter | Type | Optional | Default | Description
---------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | false | - | The code of the 'Organization'.
-api_version | float | false | - | The version number of the API.
-pass_type_number | integer | false | - | The number of the 'PasSoort'.
-account_password | string | false | - | The password of the Pashouder.
-account_login | string | false | - | The inlog name of the Pashouder.
-user_review | boolean | true | false | If set, only returns the review belonging to this user.
-id_ | integer | false | - | ID number of the specific action.
 
 
 ### Status code
