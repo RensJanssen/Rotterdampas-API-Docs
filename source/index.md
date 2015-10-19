@@ -33,6 +33,8 @@ password: Intermediad!2
 ```
 Authentication in Productie will follow after testing.
 
+A password for login has to contain 8 characters, a digit, an upper- and lowercase characters and a symbol. The symbols that can be used are: ` ~ ! @ # $ % ^ _ * () - = + [ { ] } \ | ; : ' " < , > . / ?
+
 # Cache
 
 Caching should be used whenever possible. This reduces server load significantly. It is recommended to at least use caching with a "Last Modified" header and / or ETag. This will reduce server time since the body does not have to be calculated, and since we only request the HEAD, bandwidth is also saved.
@@ -92,11 +94,11 @@ GET https://rotterdampas.passcloud.nl/rest/gettoken/
 
 ### Headers
 
-Header | Default | Description
------- | ------- | -----------
-pass_owner_code | APAS | The code of the 'Organization'.
-api_version | 1 | The version number of the API.
-pass_type_number | 354 | The number of the 'PasSoort'.
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 #### Parameters
 
@@ -143,11 +145,11 @@ PUT https://rotterdampas.passcloud.nl/rest/putregister/
 
 ### Headers
 
-Header | Default | Description
------- | ------- | -----------
-pass_owner_code | APAS | The code of the 'Organization'.
-api_version | 1 | The version number of the API.
-pass_type_number | 354 | The number of the 'PasSoort'.
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 
 #### Parameters
@@ -174,9 +176,9 @@ Code | Description
 ---- | -----------
 400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
+401 | The new password does not conform the system password requirements.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-403 | Error while trying to change the password.
 404 | Can't find a Pashouder with the input parameters.
 404 | Can't find a Pas with the 'passnumber' parameter.
 200 | Everything is ok.
@@ -203,12 +205,12 @@ PUT https://rotterdampas.passcloud.nl/rest/putchangepassword/
 
 ### Headers
 
-Header | Default | Description
------- | ------- | -----------
-X-AUTHENTICATION-TOKEN | - | The personal token of the user.
-pass_owner_code | APAS | The code of the 'Organization'.
-api_version | 1 | The version number of the API.
-pass_type_number | 354 | The number of the 'PasSoort'.
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 
 ### Parameters
@@ -217,7 +219,6 @@ Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
 old_password | string | false | - | The old password for login.
 new_password | string | false | - | A new password for login.
-email_address | string | false | - | The email/ inlog name of the Pashouder.
 
 > Response
 
@@ -231,10 +232,10 @@ Code | Description
 ---- | -----------
 400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Wrong values in X-AUTHENTICATION-TOKEN authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-403 | Wrong value for the new password.
+403 | The new password does not conform the system password requirements.
 404 | Can't find a Pashouder with the input parameters.
 200 | Everything is ok.
 
@@ -564,12 +565,12 @@ These enums will translate to the "Pijler", Boolean flags of the "Acties", locat
 
 ### Headers
 
-Header | Default | Description
------- | ------- | -----------
-X-AUTHENTICATION-TOKEN | - | The personal token of the user.
-pass_owner_code | APAS | The code of the 'Organization'.
-api_version | 1 | The version number of the API.
-pass_type_number | 354 | The number of the 'PasSoort'.
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
@@ -597,7 +598,7 @@ action_type | string | true | - | If set, results are constrained to this action
 		"title": "Amsterdam",
 		"street": "straat",
 		"zipcode": "4444 ZZ",
-		"street_number": 44,
+		"street_number": "44",
 		"region": "Zuid-Holland",
 		"latitude": 999999,
 		"longitude": 999999,
@@ -641,7 +642,7 @@ Code | Description
 ---- | -----------
 400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in basic authentication.
-401 | Wrong values in X-AUTHENTICATION-TOKEN authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
@@ -665,12 +666,12 @@ GET https://rotterdampas.passcloud.nl/rest/getaction/
 
 ### Headers
 
-Header | Default | Description
------- | ------- | -----------
-X-AUTHENTICATION-TOKEN | - | The personal token of the user.
-pass_owner_code | APAS | The code of the 'Organization'.
-api_version | 1 | The version number of the API.
-pass_type_number | 354 | The number of the 'PasSoort'.
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 
 ### Parameters
@@ -692,10 +693,10 @@ id_ | integer | false | - | ID number of the specific action.
 	"title": "Amsterdam",
 	"street": "straat",
 	"zipcode": "4444 ZZ",
-	"street_number": 44,
+	"street_number": "44",
 	"region": "Zuid-Holland",
 	"latitude": 999999,
-	"longitude": 999999,
+	"longitude": 999999
   }],
   "has_user_shared_experience": false,
   "action_partners": [{
@@ -730,8 +731,8 @@ id_ | integer | false | - | ID number of the specific action.
 		"tariff_original": 50.50,
 		"tariff_dicount": 10.50,
 		"minimum_age": 18,
-		"maximum_age": 65,			
-  }]}]
+		"maximum_age": 65			
+  }]}],
   "title": "Stadspas Aanbieding 100% Korting",
   "end_date": 1441058399000,
   "short_description": "Stadspasje Aanb. A",
@@ -759,12 +760,12 @@ id_ | integer | false | - | ID number of the specific action.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the 'PasSoort'.
-401 | Can't find the 'organization' of the pass.
-401 |	Wrong values in the basic authentication
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 404 | Can't find any action with the 'id_'.
-500 | No values in the basic authentication.
 200 | Everything is ok.
 
 
