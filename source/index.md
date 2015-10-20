@@ -96,7 +96,7 @@ GET https://rotterdampas.passcloud.nl/rest/gettoken/
 
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -147,7 +147,7 @@ PUT https://rotterdampas.passcloud.nl/rest/putregister/
 
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -208,7 +208,7 @@ PUT https://rotterdampas.passcloud.nl/rest/putchangepassword/
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
 X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -248,6 +248,13 @@ Sends an email to the users email address. In this mail the user can click on a 
 
 This REST API Forgot Password will follow after the implementation of the DeepLink Module in PASS.
 
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/forgotpassword/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/forgotpassword/
+```
+
 
 ## Update user photo
 
@@ -277,7 +284,7 @@ GET https://rotterdampas.passcloud.nl/rest/getsettings/
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
 X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -341,7 +348,7 @@ PUT https://rotterdampas.passcloud.nl/rest/putsettings/
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
 X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -403,15 +410,15 @@ Code | Description
 
 > preferences are based on the pillar enum and a floating point value from -1.0 to 1.0.
 
-## Add Device id
+## Push Token
 
 Register a new device id to the users account.
 
 ```
 Request endpoint Acceptatie:
-POST https://rotterdampas-acc.passcloud.nl/rest/postdevice/
+POST https://rotterdampas-acc.passcloud.nl/rest/pushtoken/
 Request endpoint Productie:
-POST https://rotterdampas.passcloud.nl/rest/postdevice/
+POST https://rotterdampas.passcloud.nl/rest/pushtoken/
 ```
 
 ### Headers
@@ -419,7 +426,7 @@ POST https://rotterdampas.passcloud.nl/rest/postdevice/
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
 X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -428,7 +435,7 @@ pass_type_number | false | 354 | The number of the 'PasSoort'.
 ```json
 {
   "device_id": "ahasdjhdaskjd-asdjkaskjd-sad-asd-ascscx-zxc",
-  "type": "android"
+  "type_": "android"
 }
 ```
 
@@ -494,7 +501,7 @@ These enums will translate to the "Pijler", Boolean flags of the "Acties", locat
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
 X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -527,12 +534,12 @@ action_type | string | true | - | If set, results are constrained to this action
 		"street_number": "44",
 		"region": "Zuid-Holland",
 		"latitude": 999999,
-		"longitude": 999999,
+		"longitude": 999999
 	}],
     "all_actions_offers": [ 	{
-		"title": "Titel"
+		"title": "Titel",
 		"percentage": 4.75,
-		"amount": 7.95,
+		"amount": 7.95
 	}],
     "title": "\"gratis toegang tot het Allard Pierson Museum voor Stadspashouders van 4 t/m 16 jaar\"",
     "end_date": 1451602799000,
@@ -595,7 +602,7 @@ GET https://rotterdampas.passcloud.nl/rest/getaction/
 Header | Optional | Default | Description
 ------ | -------- | ------- | -----------
 X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
-pass_owner_code | false | APAS | The code of the 'Organization'.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
 api_version | false | 1 | The version number of the API.
 pass_type_number | false | 354 | The number of the 'PasSoort'.
 
@@ -649,7 +656,7 @@ id_ | integer | false | - | ID number of the specific action.
   }],
   "more_information_phone_number": "0172-444705",
   "action_offers": [ 	{
-	"title": "Titel"
+	"title": "Titel",
 	"percentage": 4.75,
 	"amount": 7.95,
 	"get_action_tariffs": [{
@@ -706,25 +713,20 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getrelatedactions/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 id_ | integer | verplicht | - | ID number of the specific action.
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
@@ -747,12 +749,12 @@ longitude | float | optioneel | - | If set, the actions are returned based on di
 		"street_number": 44,
 		"region": "Zuid-Holland",
 		"latitude": 999999,
-		"longitude": 999999,
+		"longitude": 999999
 	}],
     "get_related_actions_actions_offers": [	  {
-		"title": "Titel"
+		"title": "Titel",
 		"percentage": 4.75,
-		"amount": 7.95,
+		"amount": 7.95
 	}],
     "has_user_shared_experience": false,
     "get_related_actions_actions_partners": [{
@@ -784,88 +786,20 @@ longitude | float | optioneel | - | If set, the actions are returned based on di
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find the action with these parameters.
-404 | Can't find any tags linked to the action.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any action linked to 'id_'.
+404 | Can't find any tags related to this action.
 200 | Everything is ok.
-
-> Reponse
-
-```json
-{
-  "meta": {
-    "page": 0,
-    "page_size": 30,
-    "total_records": 4000
-  },
-  "actions": [
-    {
-      "id": 1,
-      "title": "Zin van bewegen",
-      "pillar": "EtenDrinken",
-      "thumbnail": "http://example.com/example.jpg",
-      "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-      "is_user_wishlist_item": true,
-      "has_user_consumed_action": true,
-      "has_user_shared_experience": true,
-      "start_date":"2015-12-09T19:33:00 +0000",
-      "end_date": "2015-12-13T19:33:00 +0000",
-      "offers": {
-        "type": 1,
-        "offer": [
-          {
-            "title": "Voor 5 euro naar de dierentuin",
-            "percentage": 25.0,
-            "amount": 23.0
-          }
-        ]
-      },
-      "partner": {
-        "id": 1,
-        "name": "Spido",
-        "url": "http://spido.nl",
-        "phone_number": "010 42984039",
-        "email_address": "example@spido.nl",
-        "street": "Botenlaan",
-        "zipcode": "2343KJ",
-        "street_number": "45",
-        "region": "Rotterdam"
-      },
-      "locations": [
-        {
-          "id": 1,
-          "title": "Ballenbak",
-          "street": "Jan Luykenlaan",
-          "zipcode": "2343KJ",
-          "street_number": "8",
-          "region": "Rotterdam",
-          "latitude": 4.0000,
-          "longitude": 51.0000
-        }
-      ]
-    }
-  ]
-}
-```
-### Request
-
-`GET /api/{version}/actions/{id}/related`
-
-### Query Parameters
-
-Parameter | Optional | Default | Description
---------- | -------- | ------- | -----------
-meta | true | false | If set, the body will not contain the results but just the meta data for this call.
 
 # Reviews
 
 ## Get action reviews
+
+### Request
 
 Returns all reviews of an "Actie". Sorted by date added, descending.
 
@@ -876,25 +810,19 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getactionreview/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
 action_id | integer | verplicht | - | ID number of the specific action.
@@ -924,47 +852,14 @@ meta | boolean | optioneel | false | If set, the body will not contain the resul
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find the action related to the parameter 'action_id'.
-404 | Can't find any reviews that belong to the related action.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any action linked to 'action_id'.
+404 | Can't find any review linked to this action.
 200 | Everything is ok.
-
-> Response
-
-```json
-{
-  "meta": {
-    "page": 0,
-    "page_size": 30,
-    "total_records": 4000,
-    "average_review": 5.4
-  },
-  "reviews": [
-    {
-      "id": 3,
-      "author": "Robin Kruijt",
-      "user_thumbnail": "http://example.com/example.jpg",
-      "image_url": "http://example.com",
-      "rating": 4.8,
-      "title": "Prachtig uitzicht",
-      "description": "Prachtig uitzicht, heerlijk eten.",
-      "post_date": "2015-12-13T19:33:00 +0000",
-      "comment_url": "http://example.com",
-      "is_user_review": true
-    }
-  ]
-}
-```
-
-### Request
-
-`GET /api/{version}/actions/{id}/reviews`
 
 
 ## Add review
@@ -978,25 +873,19 @@ Request endpoint Productie:
 POST https://rotterdampas.passcloud.nl/rest/postreview/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Header
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | APAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 action_id | integer | verplicht | - | ID number of the specific action.
 title | string | verplicht | - | The title of the new review.
 rating | float | verplicht | - | The rating of the new review.
@@ -1020,48 +909,13 @@ description | string | optioneel | - | The description of the review.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find the action related to the parameter 'action_id'.
-500 | Internal server error while creating a new review.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any action linked to 'action_id'.
 200 | Everything is ok.
-
-> Request
-
-```json
-{
-  "title": "Hallo",
-  "description": "Beste dag van mijn leven",
-  "rating": 4.8
-}
-```
-> Description is optional.
-
-> Response
-
-```json
-{
-  "id": 3,
-  "author": "Robin Kruijt",
-  "user_thumbnail": "http://example.com/example.jpg",
-  "image_url": "",
-  "rating": 4.8,
-  "title": "Prachtig uitzicht",
-  "description": "Prachtig uitzicht, heerlijk eten.",
-  "post_date": "2015-12-13T19:33:00 +0000",
-  "comment_url": "http://example.com",
-  "is_user_review": true
-}
-```
-
-### Request
-
-`POST /api/{version}/actions/{id}/reviews`
 
 
 ## Add review image
@@ -1093,26 +947,19 @@ Request endpoint Productie:
 PUT https://rotterdampas.passcloud.nl/rest/putreview/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Header
 
-```
-Authentication in Productie will follow after testing.
-```
-
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 title | string | verplicht | - | The (new) title of the review.
 rating | float | verplicht | - | The (new) rating of the review.
 review_id | integer | verplicht | - | The id number of the review that the users wants to update.
@@ -1136,47 +983,13 @@ description | string | optioneel | - | The (new) description of the review.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find a review with the given id that is linked to this user. 
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any review linked to 'review_id'.
 200 | Everything is ok.
-
-> Request
-
-```json
-{
-  "title": "Hallo",
-  "description": "Beste dag van mijn leven",
-  "rating": 4.8
-}
-```
-> Description is optional.
-
-> Response
-
-```json
-{
-  "id": 3,
-  "author": "Robin Kruijt",
-  "user_thumbnail": "http://example.com/example.jpg",
-  "image_url": "",
-  "rating": 4.8,
-  "title": "Prachtig uitzicht",
-  "description": "Prachtig uitzicht, heerlijk eten.",
-  "post_date": "2015-12-13T19:33:00 +0000",
-  "comment_url": "http://example.com",
-  "is_user_review": true
-}
-```
-
-### Request
-
-`PUT /api/{version}/actions/{id}/reviews/{id}`
 
 ## Delete Review
 
@@ -1197,25 +1010,19 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getuseractions/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
 meta | boolean | optioneel | false | If set, the body will not contain the results but just the meta data for this call.
@@ -1247,7 +1054,7 @@ year | integer | optioneel | - | If included, the results will constrained to th
     "get_user_actions_actions_offers": [	{
 		"title": "Titel",
 		"percentage": 4.75,
-		"amount": 9.95,
+		"amount": 9.95
 	}],
     "short_description": "Gratis naar de Filmhallen",
     "get_user_actions_actions_locations": [	{
@@ -1258,7 +1065,7 @@ year | integer | optioneel | - | If included, the results will constrained to th
 		"street_number": 44,
 		"region": "Zuid-Holland",
 		"latitude": 999999,
-		"longitude": 999999, 
+		"longitude": 999999
 	}],
     "pillar": "Cultuur",
     "id_": 557,
@@ -1273,86 +1080,12 @@ year | integer | optioneel | - | If included, the results will constrained to th
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find a pass.
-404 | Can't find any usage.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
-
-> Reponse
-
-```json
-{
-  "meta": {
-    "page": 0,
-    "page_size": 30,
-    "total_records": 100
-  },
-  "actions": [
-    {
-      "id": 1,
-      "title": "Zin van bewegen",
-      "pillar": "EtenDrinken",
-      "thumbnail": "http://example.com/example.jpg",
-      "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-      "is_user_wishlist_item": true,
-      "consumption_date": "2015-12-09T19:33:00 +0000",
-      "has_user_shared_experience": true,
-      "start_date":"2015-12-09T19:33:00 +0000",
-      "end_date": "2015-12-13T19:33:00 +0000",
-      "offers": {
-        "type": 1,
-        "offer": [
-          {
-            "title": "Voor 5 euro naar de dierentuin",
-            "percentage": 25.0,
-            "amount": 23.0
-          }
-        ]
-      },
-      "partner": {
-        "id": 1,
-        "name": "Spido",
-        "url": "http://spido.nl",
-        "phone_number": "010 42984039",
-        "email_address": "example@spido.nl",
-        "street": "Botenlaan",
-        "zipcode": "2343KJ",
-        "street_number": "45",
-        "region": "Rotterdam"
-      },
-      "locations": [
-        {
-          "id": 1,
-          "title": "Ballenbak",
-          "street": "Jan Luykenlaan",
-          "zipcode": "2343KJ",
-          "street_number": "8",
-          "region": "Rotterdam",
-          "latitude": 4.0000,
-          "longitude": 51.0000
-        }
-      ]
-    }
-  ]
-}
-```
-### Request
-
-`GET /api/{version}/users/me/actions`
-
-### Query Parameters
-
-Parameter | Optional | Default | Description
---------- | -------- | ------- | -----------
-meta | true | false | If set, the body will not contain the results but just the meta data for this call. 
-include_family | true | false | If set, the result will include the actions consumed by the users family. 
-year | true | - | If included, the results will constrained to the specific "pass year".
 
 ## Get current authenticated user
 
@@ -1365,25 +1098,18 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getcurrentauthenticateduser/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
-Parameter | Type | Optional | Default | Description
---------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
+There are no parameters for this call.
 
 > Response
 
@@ -1404,34 +1130,12 @@ account_password | string | verplicht | - | The password of the Pashouder.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-500 | No values in the basic authentication.
-500 | Internal server error while creating a response.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
-
-> Response
-
-```json
-{
-  "id": 1,
-  "pasnumber": 5,
-  "username": "timpelgrim",
-  "first_name": "Tim",
-  "last_name": "Pelgrim",
-  "user_thumbnail": "http://example.com/example.jpg",
-  "currently_active": true,
-  "amount_reviews": 16,
-  "amount_actions_consumed": 12
-}
-```
-
-### Request
-`GET /api/{version}/users/me`
 
 ## Get user reviews
 
@@ -1444,25 +1148,19 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getuserreview/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
 
@@ -1491,49 +1189,13 @@ per_page | integer | verplicht | - | The count of the results per page.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find any reviews for this user.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
 
-> Response
-
-```json
-{
-  "meta": {
-    "page": 0,
-    "page_size": 30,
-    "total_records": 4000,
-    "average_review": 5.4
-  },
-  "reviews": [
-    {
-      "id": 3,
-      "author": "Robin Kruijt",
-      "user_thumbnail": "http://example.com/example.jpg",
-      "image_url": "http://example.com",
-      "rating": 4.8,
-      "title": "Prachtig uitzicht",
-      "description": "Prachtig uitzicht, heerlijk eten.",
-      "post_date": "2015-12-13T19:33:00 +0000",
-      "comment_url": "http://example.com",
-      "is_user_review": true,
-      "action": {
-        "id": 1
-      }
-    }
-  ]
-}
-```
-> The action field includes just an ID, but could include more data if the view requires it. (To be discussed)
-
-### Request
-`GET /api/{version}/users/me/reviews`
 
 ## Get savings
 
@@ -1783,25 +1445,19 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getwishlists/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
 amount_actions | boolean | optioneel | false | If set, returns this amount of actions per wishlist.
@@ -1824,12 +1480,12 @@ amount_actions | boolean | optioneel | false | If set, returns this amount of ac
 				"street_number": "18",
 				"region": "Amsterdam",
 				"longitude": 57.00120155,
-				"latitude": 12.25369844,
+				"latitude": 12.25369844
 			}],
             "get_wishlists_actions_offers": [	{
 				"title": "Titel",
 				"percentage": 4.75,
-				"amount": 9.95,
+				"amount": 9.95
 			}],
             "title": "Stadspasje Aanb. A",
             "end_date": 1441058399000,
@@ -1862,91 +1518,12 @@ amount_actions | boolean | optioneel | false | If set, returns this amount of ac
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find any wishlists that are connected to the user.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
-
-> Response
-
-```json
-{
-  "meta": {
-    "page": 0,
-    "page_size": 30,
-    "total_records": 1200
-  },
-  "wishlists":[
-    {
-      "id": 1,
-      "title": "Zomervakantie",
-      "actions": [
-        {
-          "id": 1,
-          "title": "Zin van bewegen",
-          "pillar": "EtenDrinken",
-          "thumbnail": "http://example.com/example.jpg",
-          "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-          "is_user_wishlist_item": true,
-          "has_user_consumed_action": true,
-          "has_user_shared_experience": true,
-          "start_date":"2015-12-09T19:33:00 +0000",
-          "end_date": "2015-12-13T19:33:00 +0000",
-          "offers": {
-            "type": 1,
-            "offer": [
-              {
-                "title": "Voor 5 euro naar de dierentuin",
-                "percentage": 25.0,
-                "amount": 23.0
-              }
-            ]
-          },
-          "partner": {
-            "id": 1,
-            "name": "Spido",
-            "url": "http://spido.nl",
-            "phone_number": "010 42984039",
-            "email_address": "example@spido.nl",
-            "street": "Botenlaan",
-            "zipcode": "2343KJ",
-            "street_number": "45",
-            "region": "Rotterdam"
-          },
-          "locations": [
-            {
-              "id": 1,
-              "title": "Ballenbak",
-              "street": "Jan Luykenlaan",
-              "zipcode": "2343KJ",
-              "street_number": "8",
-              "region": "Rotterdam",
-              "latitude": 4.0000,
-              "longitude": 51.0000
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-
-```
-
-### Request
-
-`GET /api/{versions}/users/me/wishlists`
-
-### Query Parameters
-
-Parameter | Optional | Default | Description
---------- | -------- | ------- | -----------
-amount_actions | true | 3 | If set, returns this amount of actions per wishlist.
 
 
 ## Get Wishlist
@@ -1960,27 +1537,19 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getwishlist/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
-page | integer | verplicht | - | The result page number.
-per_page | integer | verplicht | - | The count of the results per page.
 id_ | integer | verplicht | - | ID number of the specific action.
 
 > Response
@@ -2007,7 +1576,7 @@ id_ | integer | verplicht | - | ID number of the specific action.
       "get_wishlist_actions_offers": [	{
 		"title": "Titel",
 		"percentage": 4.75,
-		"amount": 9.95,
+		"amount": 9.95
 	  }],
       "pillar": "Cultuur",
       "id_": 270,
@@ -2033,74 +1602,14 @@ id_ | integer | verplicht | - | ID number of the specific action.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 404 | Can't find a wishlist related to the parameter 'id_'.
-500 | No values in the basic authentication.
 200 | Everything is ok.
 
-> Response
-
-```json
-{
-  "id": 1,
-  "title": "Zomervakantie",
-  "actions": [
-    {
-      "id": 1,
-      "title": "Zin van bewegen",
-      "pillar": "EtenDrinken",
-      "thumbnail": "http://example.com/example.jpg",
-      "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-      "is_user_wishlist_item": true,
-      "has_user_consumed_action": true,
-      "has_user_shared_experience": true,
-      "start_date":"2015-12-09T19:33:00 +0000",
-      "end_date": "2015-12-13T19:33:00 +0000",
-      "offers": {
-        "type": 1,
-        "offer": [
-          {
-            "title": "Voor 5 euro naar de dierentuin",
-            "percentage": 25.0,
-            "amount": 23.0
-          }
-        ]
-      },
-      "partner": {
-        "id": 1,
-        "name": "Spido",
-        "url": "http://spido.nl",
-        "phone_number": "010 42984039",
-        "email_address": "example@spido.nl",
-        "street": "Botenlaan",
-        "zipcode": "2343KJ",
-        "street_number": "45",
-        "region": "Rotterdam"
-      },
-      "locations": [
-        {
-          "id": 1,
-          "title": "Ballenbak",
-          "street": "Jan Luykenlaan",
-          "zipcode": "2343KJ",
-          "street_number": "8",
-          "region": "Rotterdam",
-          "latitude": 4.0000,
-          "longitude": 51.0000
-        }
-      ]
-    }
-  ]
-}
-```
-
-### Request
-`GET /api/{versions}/users/me/wishlists/{id}`
 
 ## Post Wishlist
 
@@ -2113,25 +1622,19 @@ Request endpoint Productie:
 POST https://rotterdampas.passcloud.nl/rest/postwishlist/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 title | string | verplicht | - | The title of the new wishlist.
 
 > Response
@@ -2148,35 +1651,12 @@ title | string | verplicht | - | The title of the new wishlist.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
-
-> Request
-
-```json
-{
-  "title": "Zomervakantie"
-}
-```
-
-> Response
-
-```json
-{
-  "id": 1,
-  "title": "Zomervakantie",
-  "actions": []
-}
-```
-
-### Request
-`POST /api/{versions}/users/me/wishlists`
 
 ## Update Wishlist
 
@@ -2189,25 +1669,19 @@ Request endpoint Productie:
 PUT https://rotterdampas.passcloud.nl/rest/putwishlist/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 title | string | verplicht | - | The new title of the wishlist.
 id_ | integer | verplicht | - | The id number of the wishlist.
 
@@ -2225,36 +1699,14 @@ id_ | integer | verplicht | - | The id number of the wishlist.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find a wishlist with the given id.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any wishlist with the given 'id_'
 200 | Everything is ok.
 
-> Request
-
-```json
-{
-  "title": "Zomervakantie"
-}
-```
-
-> Response
-
-```json
-{
-  "id": 1,
-  "title": "Zomervakantie",
-  "actions": []
-}
-```
-
-### Request
-`PUT /api/{versions}/users/me/wishlists/{id}`
 
 ## Add action to wishlist
 
@@ -2267,25 +1719,19 @@ Request endpoint Productie:
 POST https://rotterdampas.passcloud.nl/rest/postactiontowishlist/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 action_id | integer | verplicht | - | The id number of the action.
 wishlist_id | integer | verplicht | - | The is number of the wishlist.
 
@@ -2295,28 +1741,15 @@ wishlist_id | integer | verplicht | - | The is number of the wishlist.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find a wishlist for the given id.
-404 | Can't find an action for the given id.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any actions related to 'action_id'.
+404 | Can't find any wishlists related to 'wishlist_id'.
 200 | Everything is ok.
 
-> Request
-
-```json
-{
-  "action_id": 1
-}
-```
-
-### Request
-
-`POST /api/{versions}/users/me/wishlists/{id}`
 
 ## Delete Wishlist
 
@@ -2336,25 +1769,11 @@ Request endpoint Productie:
 DELETE https://rotterdampas.passcloud.nl/rest/deleteactiontowishlist/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
-
-```
-Authentication in Productie will follow after testing.
-```
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 action_id | integer | verplicht | - | The id number of the action.
 wishlist_id | integer | verplicht | - | The is number of the wishlist.
 
@@ -2364,29 +1783,14 @@ wishlist_id | integer | verplicht | - | The is number of the wishlist.
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-404 | Can't find a wishlist for the given id.
-404 | Can't find an action for the given id.
-404 | Can't find the wishlist item.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any wishlist action item that is connect to the given 'action_id' and 'wishlist_id'.
 200 | Everything is ok.
 
-> Request
-
-```json
-{
-  "action_id": 1
-}
-```
-
-### Request
-
-`DELETE /api/{versions}/users/me/wishlists/{id}`
 
 # Passes
 
@@ -2401,25 +1805,19 @@ Request endpoint Productie:
 GET https://rotterdampas.passcloud.nl/rest/getpasses/
 ```
 
-```
-Authentication in Acceptatie: Basic authentication with a rest user.
-username: wsrest2
-password: Intermediad!2
-```
+### Headers
 
-```
-Authentication in Productie will follow after testing.
-```
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 ### Parameters
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-pass_owner_code | string | verplicht | - | The code of the 'Organization'.
-api_version | float | verplicht | - | The version number of the API.
-pass_type_number | integer | verplicht | - | The number of the 'PasSoort'.
-account_login | string | verplicht | - | The inlog name of the Pashouder.
-account_password | string | verplicht | - | The password of the Pashouder.
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
 include_family | boolean | optioneel | false | If set, the result will include the passes of the users family.
@@ -2454,43 +1852,9 @@ include_family | boolean | optioneel | false | If set, the result will include t
 
 Code | Description
 ---- | -----------
-400 | One or more mandatory parameters are empty.
-400 | Can't find the PasSoort.
-401 | Can't find the organization.
+400 | One or more mandatory parameters and/or headers are empty.
 401 | Wrong values in the basic authentication.
-401 | Can't verify Pashouder.
-404 | Can't find the Pashouder.
-500 | No values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
 200 | Everything is ok.
-
-### Request
- 
-`GET /api/{version}/users/me/passes`
- 
-### Query Parameters
-
-Parameter | Optional | Default | Description
---------- | -------- | ------- | -----------
-include_family | true | false | If set, includes the passes of the users family.
-
-> Response
-
-```json
-{
-  "meta": {
-    "page": 0,
-    "page_size": 20,
-    "total_records": 5
-  },
-  "passes":[
-    {
-      "id": 1,
-      "owner_name": "N. de Vries",
-      "number": 086951,
-      "image": "wwww.example.com/image.png",
-      "active": true,
-      "end_date": "2015-12-13T19:33:00 +0000"
-    }
-  ]
-}
-```
