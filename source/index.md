@@ -731,7 +731,7 @@ id_ | integer | verplicht | - | ID number of the specific action.
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
 meta | boolean | optioneel | false | If set, the body will not contain the results but just the meta data for this call.
-pijler_naam | string | optioneel | - | Specifies the type of actions.
+pillar | string | optioneel | - | Specifies the type of actions.
 latitude | float | optioneel | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
 longitude | float | optioneel | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
 
@@ -791,8 +791,7 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any action linked to 'id_'.
-404 | Can't find any tags related to this action.
+404 | Can't find any action with 'id_'.
 200 | Everything is ok.
 
 # Reviews
@@ -857,8 +856,7 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any action linked to 'action_id'.
-404 | Can't find any review linked to this action.
+404 | Can't find any action with 'action_id'.
 200 | Everything is ok.
 
 
@@ -914,7 +912,7 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any action linked to 'action_id'.
+404 | Can't find any action with 'action_id'.
 200 | Everything is ok.
 
 
@@ -988,14 +986,50 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any review linked to 'review_id'.
+404 | Can't find any review with 'review_id'.
 200 | Everything is ok.
 
 ## Delete Review
 
 ### Request
 
-`DELETE /api/{version}/actions/{id}/reviews/{id}`
+```
+Request endpoint Acceptatie:
+DELETE https://rotterdampas-acc.passcloud.nl/rest/deletereview/
+Request endpoint Productie:
+DELETE https://rotterdampas.passcloud.nl/rest/deletereview/
+```
+
+### Header
+
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+action_id | integer | verplicht | - | The id number of the action.
+review_id | integer | verplicht | - | The id number of the review.
+
+> Response: only returns a status code.
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find a review related to the given 'action_id' and 'review_id'.
+200 | Everything is ok.
+
 
 # User
 
@@ -1607,7 +1641,7 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find a wishlist related to the parameter 'id_'.
+404 | Can't find a wishlist with 'id_'.
 200 | Everything is ok.
 
 
@@ -1704,7 +1738,7 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any wishlist with the given 'id_'
+404 | Can't find any wishlist with 'id_'
 200 | Everything is ok.
 
 
@@ -1746,8 +1780,8 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any actions related to 'action_id'.
-404 | Can't find any wishlists related to 'wishlist_id'.
+404 | Can't find any actions with 'action_id'.
+404 | Can't find any wishlists with 'wishlist_id'.
 200 | Everything is ok.
 
 
@@ -1788,7 +1822,7 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any wishlist action item that is connect to the given 'action_id' and 'wishlist_id'.
+404 | Can't find any wishlist action item that with the given 'action_id' and 'wishlist_id'.
 200 | Everything is ok.
 
 
