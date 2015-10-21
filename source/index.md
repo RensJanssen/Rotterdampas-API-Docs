@@ -523,10 +523,9 @@ action_type | string | true | - | If set, results are constrained to this action
 ```json
 {
   "page_size": 1,
-  "meta_all_actions": [{
+  "get_all_actions_actions": [{
     "type_": "Standaard",
-    "has_user_shared_experience": false,
-    "all_actions_locations": [ 	{
+    "get_all_actions_actions_locations": [	{
 		"id_": 545,
 		"title": "Amsterdam",
 		"street": "straat",
@@ -536,36 +535,37 @@ action_type | string | true | - | If set, results are constrained to this action
 		"latitude": 999999,
 		"longitude": 999999
 	}],
-    "all_actions_offers": [ 	{
-		"title": "Titel",
-		"percentage": 4.75,
-		"amount": 7.95
-	}],
+    "has_user_shared_experience": false,
     "title": "\"gratis toegang tot het Allard Pierson Museum voor Stadspashouders van 4 t/m 16 jaar\"",
     "end_date": 1451602799000,
-    "distance": 9.99999999E8,
+    "distance": 999999,
     "thumbnail": "http://example.com/example.jpg",
-    "all_actions_partners": [{
-      "region": "Amsterdam",
-      "phone_number": "020 525 25 56",
-      "zipcode": "1012 GC",
-      "street": "Oude Turfmarkt",
-      "name": "Allard Pierson Museum",
-      "street_number": "127",
-      "id_": 100014,
-      "url": "http://www.allardpiersonmuseum.nl",
-      "email_address": "allard.pierson.museum@uva.nl"
-    }],
     "action_type": "A - Jaarkorting",
     "short_description": "kids 4- 16 jaar",
     "pillar": "Cultuur",
     "id_": 30281,
     "has_user_consumed_action": false,
     "is_user_wishlist_item": false,
-    "start_date": 1422745200000
+    "start_date": 1422745200000,
+    "get_all_actions_actions_offers": [	{
+		"title": "Titel",
+		"percentage": 4.75,
+		"amount": 7.95
+	}],
+    "get_all_actions_actions_partners": [{
+		"region": "Amsterdam",
+		"phone_number": "020 525 25 56",
+		"zipcode": "1012 GC",
+		"street": "Oude Turfmarkt",
+		"name": "Allard Pierson Museum",
+		"street_number": "127",
+		"id_": 100014,
+		"url": "http://www.allardpiersonmuseum.nl",
+		"email_address": "allard.pierson.museum@uva.nl"
+    }]
   }],
   "page": 1,
-  "total_records": 13
+  "total_records": 14
 }
 ```
 
@@ -620,19 +620,7 @@ id_ | integer | false | - | ID number of the specific action.
 ```json
 {
   "type_": "Standaard",
-  "reservation_phone_number": "0172-444705",
-  "action_locations": [ 	{
-	"id_": 545,
-	"title": "Amsterdam",
-	"street": "straat",
-	"zipcode": "4444 ZZ",
-	"street_number": "44",
-	"region": "Zuid-Holland",
-	"latitude": 999999,
-	"longitude": 999999
-  }],
-  "has_user_shared_experience": false,
-  "action_partners": [{
+  "get_action_action_partners": [{
     "region": "Amsterdam",
     "phone_number": "020 763 0599",
     "zipcode": "1082 ME",
@@ -643,20 +631,25 @@ id_ | integer | false | - | ID number of the specific action.
     "url": "http://www.amsterdamexpo.nl",
     "email_address": "arnold.vandewater@terminal1.nl"
   }],
-  "action_tags": [	{
-	"title": "Titel Tag"
+  "reservation_phone_number": "020 763 0599",
+  "get_action_action_locations": [	{
+	"id_": 545,
+	"title": "Amsterdam",
+	"street": "straat",
+	"zipcode": "4444 ZZ",
+	"street_number": "44",
+	"region": "Zuid-Holland",
+	"latitude": 999999,
+	"longitude": 999999
   }],
-  "action_flags": [{
-    "is_same_day_consumable": false,
-    "is_indoors": false,
-    "is_child_friendly": false,
-    "is_fun_without_children": false,
-    "is_bad_weather": false,
-    "is_nice_weather": false
-  }],
-  "more_information_phone_number": "0172-444705",
-  "action_offers": [ 	{
-	"title": "Titel",
+  "has_user_shared_experience": true,
+  "more_information_phone_number": "020 763 0599",
+  "end_date": 1441058399000,
+  "title": "Stadspas Aanbieding 100% Korting",
+  "short_description": "Stadspasje Aanb. A",
+  "availability_type": 2,
+  "get_action_action_offers": [	{
+    "title": "Titel",
 	"percentage": 4.75,
 	"amount": 7.95,
 	"get_action_tariffs": [{
@@ -664,27 +657,34 @@ id_ | integer | false | - | ID number of the specific action.
 		"tariff_original": 50.50,
 		"tariff_dicount": 10.50,
 		"minimum_age": 18,
-		"maximum_age": 65			
-  }]}],
-  "title": "Stadspas Aanbieding 100% Korting",
-  "end_date": 1441058399000,
-  "short_description": "Stadspasje Aanb. A",
-  "availability_type": 2,
-  "reservation_url": "http://www.example.com/",
-  "total_reviews": 3,
-  "action_images": [	{
-	"cdn_url": "http://www.example.com/example.jpg"
+		"maximum_age": 65
+	}]}],
+  "reservation_url": "http://example.com",
+  "get_action_action_tags": [	{
+  	"title": "Titel Tag"
   }],
-  "more_information_email": ,
+  "get_action_action_images": [	{
+    "cdn_url": "http://www.example.com/example.jpg"
+  }],
+  "total_reviews": 6,
+  "get_action_action_flags": [{
+    "is_same_day_consumable": false,
+    "is_indoors": false,
+    "is_child_friendly": false,
+    "is_fun_without_children": false,
+    "is_bad_weather": false,
+    "is_nice_weather": false
+  }],
+  "more_information_email": "test@test.nl",
   "thumbnail": "http://example.com/example.jpg",
-  "average_review": 5.433333333333334,
+  "average_review": 4.833333333333333,
   "pillar": "Cultuur",
   "id_": 30274,
-  "reservation_email": "test@testen.nl",
-  "more_information_url": "http://www.example.com/",
-  "is_user_wishlist_item": false,
-  "has_user_consumed_action": false,
-  "start_date": 1422745200000
+  "more_information_url": "http://example.com",
+  "reservation_email": "test@test.nl",
+  "start_date": 1422745200000,
+  "is_user_wishlist_item": true,
+  "has_user_consumed_action": false
 }
 ```
 
@@ -740,13 +740,13 @@ longitude | float | optioneel | - | If set, the actions are returned based on di
 ```json
 {
   "page_size": 10,
-  "get_related_actions_meta_actions": [{
+  "get_related_actions_actions": [{
     "get_related_actions_actions_locations": [	 {
 		"id_": 545,
 		"title": "Amsterdam",
 		"street": "straat",
 		"zipcode": "4444 ZZ",
-		"street_number": 44,
+		"street_number": "44",
 		"region": "Zuid-Holland",
 		"latitude": 999999,
 		"longitude": 999999
@@ -831,7 +831,7 @@ meta | boolean | optioneel | false | If set, the body will not contain the resul
 
 ```json
 {
-  "get_action_reviews_meta_reviews": [{
+  "get_action_reviews_reviews": [{
     "author": "R Janssen",
     "title": "Test Review #3",
     "is_user_review": true,
@@ -1069,7 +1069,7 @@ year | integer | optioneel | - | If included, the results will constrained to th
 {
   "page_size": 1,
   "page": 1,
-  "get_user_actions_meta_actions": [{
+  "get_user_actions_actions": [{
     "has_user_shared_experience": false,
     "consumption_date": 1433376000000,
     "get_user_actions_actions_partners": [{
@@ -1202,18 +1202,18 @@ per_page | integer | verplicht | - | The count of the results per page.
 
 ```json
 {
-  "meta_get_user_reviews": [{
+  "page_size": 1,
+  "get_user_reviews_reviews": [{
+    "action_id": 270,
     "author": "pietjepuk@gmail.com",
-    "title": "Title",
+    "title": "title",
     "is_user_review": true,
-    "reviews_get_user_reviews_actions": [{"id_": 270}],
+    "review_id": 3,
     "description": "Een stukje tekst",
     "rating": 4,
-    "id_": 3,
-    "post_date": 1444727339056
+    "post_date": 1445418601061
   }],
-  "page_size": 1,
-  "average_review": 4.716666666666667,
+  "average_review": 4.833333333333333,
   "page": 1,
   "total_records": 6
 }
@@ -1494,57 +1494,57 @@ Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
 page | integer | verplicht | - | The result page number.
 per_page | integer | verplicht | - | The count of the results per page.
-amount_actions | boolean | optioneel | false | If set, returns this amount of actions per wishlist.
 
 > Response
 
 ```json
 {
-   "meta_get_wishlists":    [   {
-         "title": "6666",
+   "get_wishlists_wishlists":    [    {
+         "amount_actions": 1,
+         "title": "Een nieuwe titel",
          "id_": 1,
-         "get_wishlists_wishlists_action_amount": [],
          "get_wishlists_wishlists_actions": [         {
-            "has_user_shared_experience": true,
-            "get_wishlists_actions_locations": [	{
-				"id_": 512,
-				"title": "Titel",
-				"street": "Hoofdstraat",
-				"zipcode": "3501 BC",
-				"street_number": "18",
-				"region": "Amsterdam",
-				"longitude": 57.00120155,
-				"latitude": 12.25369844
-			}],
             "get_wishlists_actions_offers": [	{
-				"title": "Titel",
-				"percentage": 4.75,
-				"amount": 9.95
-			}],
-            "title": "Stadspasje Aanb. A",
+			"title": "Titel",
+			"percentage": 4.75,
+			"amount": 9.95
+		}],
             "end_date": 1441058399000,
+            "title": "Stadspasje Aanb. A",
             "short_description": "Stadspas Aanbieding 100% Korting",
+            "has_user_shared_experience": true,
             "pillar": "Cultuur",
             "id_": 30274,
             "get_wishlists_actions_partners": [            {
-               "region": "Amsterdam",
-               "phone_number": "020 763 0599",
-               "zipcode": "1082 ME",
-               "street": "G. Mahlerlaan",
-               "name": "Amsterdam Expo BV",
-               "street_number": "106",
-               "id_": 10234,
-               "url": "http://www.amsterdamexpo.nl",
-               "email_address": "arnold.vandewater@terminal1.nl"
-            }],
-            "is_user_wishlist_item": true,
+			"region": "Amsterdam",
+			"phone_number": "020 763 0599",
+			"zipcode": "1082 ME",
+			"street": "G. Mahlerlaan",
+			"name": "Amsterdam Expo BV",
+			"street_number": "106",
+			"id_": 10234,
+			"url": "http://www.amsterdamexpo.nl",
+			"email_address": "arnold.vandewater@terminal1.nl"
+            	}],
+            "get_wishlists_actions_locations": [	{
+			"id_": 512,
+			"title": "Titel",
+			"street": "Hoofdstraat",
+			"zipcode": "3501 BC",
+			"street_number": "18",
+			"region": "Amsterdam",
+			"longitude": 57.00120155,
+			"latitude": 12.25369844
+		}],
+            "start_date": 1422745200000,
             "has_user_consumed_action": false,
-            "start_date": 1422745200000
+            "is_user_wishlist_item": true
          }]
-      }],
+      }
+   ],
    "page_size": 1,
    "page": 1,
-   "total_records": 3
+   "total_records": 1
 }
 ```
 
@@ -1676,8 +1676,7 @@ title | string | verplicht | - | The title of the new wishlist.
 ```json
 {
   "title": "wishlist#1",
-  "id_": 1,
-  "post_wishlist_response_actions": []
+  "id_": 1
 }
 ```
 
@@ -1724,8 +1723,7 @@ id_ | integer | verplicht | - | The id number of the wishlist.
 ```json
 {
   "title": "Een nieuwe titel",
-  "id_": 1,
-  "put_wishlist_response_actions": []
+  "id_": 1
 }
 ```
 
@@ -1790,7 +1788,43 @@ Code | Description
 Deletes an authenticated users wishlist.
 
 ### Request
-`DELETE /api/{versions}/users/wishlists/{id}`
+
+```
+Request endpoint Acceptatie:
+DELETE https://rotterdampas-acc.passcloud.nl/rest/deletewishlist/
+Request endpoint Productie:
+DELETE https://rotterdampas.passcloud.nl/rest/deletewishlist/
+```
+
+### Headers
+
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+id_ | integer | verplicht | - | The id number of the wishlist.
+
+> Response: Only returns a status code.
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any wishlists with 'id_'.
+200 | Everything is ok.
+
 
 ## Remove action from wishlist
 
@@ -1862,7 +1896,7 @@ include_family | boolean | optioneel | false | If set, the result will include t
 {
   "page_size": 20,
   "page": 1,
-  "get_passes_meta_passes": [
+  "get_passes_passes": [
     {
       "end_date": 1451606399000,
       "owner_name": "K. Janssen",
