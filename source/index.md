@@ -517,6 +517,7 @@ latitude | float | true | - | If set, the actions are returned based on distance
 longitude | float | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
 partner_id | integer | true | - | If set, results are constrained to this partner id.
 action_type | string | true | - | If set, results are constrained to this action type.
+fuzzy_text | string | true | - | If set, the searchlist will be constraind by  matching the 'fuzzy_text' and the titels of the actions. 
 
 > Response
 
@@ -1233,85 +1234,132 @@ Code | Description
 
 ## Get savings
 
+### Request
+
+Returns all savings for the current authenticated user.
+
+
+```
+Request endpoint Acceptatie:
+GET https://rotterdampas-acc.passcloud.nl/rest/getsavings/
+Request endpoint Productie:
+GET https://rotterdampas.passcloud.nl/rest/getsavings/
+```
+
+### Headers
+
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+page | integer | verplicht | - | The result page number.
+per_page | integer | verplicht | - | The count of the results per page.
+include_family | boolean | optioneel | false | If set, result will include family passes.
+
 > Response
 
 ```json
 {
-  "meta": {
-    "page": 0,
-    "page_size": 30,
-    "total_savings": 23.48
-  },
-  "savings":[
-    {
-      "id": 1,
-      "date_of_use": "2015-12-09T19:33:00 +0000",
-      "actual_savings": 12.30,
-      "calculated_savings": 12.50,
-      "action":{
-        "id": 1,
-        "title": "Zin van bewegen",
-        "pillar": "EtenDrinken",
-        "thumbnail": "http://example.com/example.jpg",
-        "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-        "is_user_wishlist_item": true,
-        "has_user_consumed_action": true,
-        "has_user_shared_experience": true,
-        "start_date":"2015-12-09T19:33:00 +0000",
-        "end_date": "2015-12-13T19:33:00 +0000",
-        "offers": {
-          "type": 1,
-          "offer": [
-            {
-              "title": "Voor 5 euro naar de dierentuin",
-              "percentage": 25.0,
-              "amount": 23.0
-            }
-          ]
-        },
-        "partner": {
-          "id": 1,
-          "name": "Spido",
-          "url": "http://spido.nl",
-          "phone_number": "010 42984039",
-          "email_address": "example@spido.nl",
-          "street": "Botenlaan",
-          "zipcode": "2343KJ",
-          "street_number": "45",
-          "region": "Rotterdam"
-        },
-        "locations": [
-          {
-            "id": 1,
-            "title": "Ballenbak",
-            "street": "Jan Luykenlaan",
-            "zipcode": "2343KJ",
-            "street_number": "8",
-            "region": "Rotterdam",
-            "latitude": 4.0000,
-            "longitude": 51.0000
-          }
-        ]
-      }
-    }
-  ]
+  "get_savings_saving": [{
+    "actual_savings": 9,
+    "date_of_use": 1433376000000,
+    "get_savings_savings_actions": [{
+      "end_date": 1441058399000,
+      "title": "Gratis naar film1",
+      "thumbnail": "www.example.com/example.png",
+      "get_savings_actions_offers": [	{
+		"title": "Titel",
+		"percentage": 4.75,
+		"amount": 7.95
+	  }],
+      "short_description": "Gratis naar de Filmhallen",
+      "get_savings_actions_partners": [{
+        "region": "Amsterdam",
+        "phone_number": "020 820 8122",
+        "zipcode": "1053 RT",
+        "street": "Hannie Dankbaarpassage",
+        "name": "De Filmhallen",
+        "street_number": "12",
+        "id_": 10235,
+        "url": "http://www.filmhallen.nl",
+        "email_address": "bob@themovies.nl"
+      }],
+      "has_user_shared_experience": false,
+      "pillar": "Cultuur",
+      "id_": 557,
+      "start_date": 1422745200000,
+      "has_user_consumed_action": false,
+      "is_user_wishlist_item": false,
+      "get_savings_actions_locations": [	{
+	    "id_": 545,
+		"title": "Amsterdam",
+		"street": "straat",
+		"zipcode": "4444 ZZ",
+		"street_number": "44",
+		"region": "Zuid-Holland",
+		"latitude": 999999,
+		"longitude": 999999
+	  }]
+    }],
+    "calculated_savings": 9,
+    "id_": 7140
+  }],
+  "total_savings": 9,
+  "page_size": 1,
+  "page": 1
 }
 ```
 
-Returns all savings for the current authenticated user.
+### Status code
 
-### Request
-`GET /api/{version}/users/me/savings`
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any pass for the current user.
+200 | Everything is ok.
 
-### Query parameters
-Parameter | Optional | Default | Description
---------- | -------- | ------- | -----------
-include_family | true | false | If set, the result will include the savings by the users family.
 
 ## Add saving
 
 A user can add a finished "Actie" and its savings manually.
 
+```
+Request endpoint Acceptatie:
+POST https://rotterdampas-acc.passcloud.nl/rest/postsaving/
+Request endpoint Productie:
+POST https://rotterdampas.passcloud.nl/rest/postsaving/
+```
+
+### Headers
+
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+action_id | integer | verplicht | - | The id number of the action.
+amount | float | verplicht | - | The amount of the new saving.
+date_of_use | date | verplicht | - | The date of the new saving.
+pas_id | long | verplicht | - | The pas number of the new saving.
+
+
 > Request
 
 ```json
@@ -1319,6 +1367,7 @@ A user can add a finished "Actie" and its savings manually.
   "action_id": 1,
   "amount": 23.00,
   "date_of_use": "2015-12-09T19:33:00 +0000"
+  "pas_id": 6011011325987,
 }
 ```
 
@@ -1326,66 +1375,93 @@ A user can add a finished "Actie" and its savings manually.
 
 ```json
 {
-  "id": 1,
-  "date_of_use": "2015-12-09T19:33:00 +0000",
-  "actual_savings": 23.00,
-  "calculated_savings": 23.00,
-  "action":{
-    "id": 1,
-    "title": "Zin van bewegen",
-    "pillar": "EtenDrinken",
-    "thumbnail": "http://example.com/example.jpg",
-    "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-    "is_user_wishlist_item": true,
-    "has_user_consumed_action": true,
-    "has_user_shared_experience": true,
-    "start_date":"2015-12-09T19:33:00 +0000",
-    "end_date": "2015-12-13T19:33:00 +0000",
-    "offers": {
-      "type": 1,
-      "offer": [
-        {
-          "title": "Voor 5 euro naar de dierentuin",
-          "percentage": 25.0,
-          "amount": 23.0
-        }
-      ]
-    },
-    "partner": {
-      "id": 1,
-      "name": "Spido",
-      "url": "http://spido.nl",
-      "phone_number": "010 42984039",
-      "email_address": "example@spido.nl",
-      "street": "Botenlaan",
-      "zipcode": "2343KJ",
-      "street_number": "45",
-      "region": "Rotterdam"
-    },
-    "locations": [
-      {
-        "id": 1,
-        "title": "Ballenbak",
-        "street": "Jan Luykenlaan",
-        "zipcode": "2343KJ",
-        "street_number": "8",
-        "region": "Rotterdam",
-        "latitude": 4.0000,
-        "longitude": 51.0000
-      }
-    ]
-  }
+  "actual_savings": 40,
+  "date_of_use": 1440374400000,
+  "calculated_savings": 40,
+  "post_saving_saving": [{
+    "post_saving_action_offers": [	{
+		"title": "Titel",
+		"percentage": 4.75,
+		"amount": 7.95
+	}],
+    "post_saving_action_partners": [{
+		"region": "Amsterdam",
+		"phone_number": "020-1234567",
+		"zipcode": "1102 AX",
+		"street": "Raoul Wallenbergstraat ",
+		"name": "Stadsloket Oost",
+		"street_number": "43",
+		"id_": 10238,
+		"url": "www.example.com",
+		"email_address": "contact@stichtingjuliusleeft.nl"
+    }],
+    "post_saving_action_locations": [	{
+		"id_": 545,
+		"title": "Amsterdam",
+		"street": "straat",
+		"zipcode": "4444 ZZ",
+		"street_number": "44",
+		"region": "Zuid-Holland",
+		"latitude": 999999,
+		"longitude": 999999
+	}],
+    "has_user_shared_experience": false,
+    "end_date": 1440374400000,
+    "title": "NIK Stadspas 1",
+    "thumbnail": "www.example.com.example.png",
+    "short_description": "Volledige Vergoeding NIK 1 Stadspas Extra Korting",
+    "pillar": "Dienstverlening",
+    "id_": 501,
+    "start_date": 1440374400000,
+    "has_user_consumed_action": false,
+    "is_user_wishlist_item": false
+  }],
+  "id_": 501
 }
 ```
 
+### Status code
 
-### Request
-`POST /api/{version}/users/me/savings`
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any pass with 'pas_id'.
+404 | Can't find any action with 'action_id'.
+200 | Everything is ok.
+
 
 ## Update saving
 
 A user can update a finished "Actie" and its savings manually.
 
+```
+Request endpoint Acceptatie:
+PUT https://rotterdampas-acc.passcloud.nl/rest/putsaving/
+Request endpoint Productie:
+PUT https://rotterdampas.passcloud.nl/rest/putsaving/
+```
+
+### Headers
+
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+action_id | integer | verplicht | - | The id number of the action.
+amount | float | verplicht | - | The new amount of the saving.
+date_of_use | date | verplicht | - | The date of the saving.
+
 > Request
 
 ```json
@@ -1395,67 +1471,20 @@ A user can update a finished "Actie" and its savings manually.
   "date_of_use": "2015-12-09T19:33:00 +0000"
 }
 ```
-> All fields are optional.
 
-> Response
+> Response: Only returns a status code.
 
-```json
-{
-  "id": 1,
-  "date_of_use": "2015-12-09T19:33:00 +0000",
-  "actual_savings": 23.00,
-  "calculated_savings": 23.00,
-  "action":{
-    "id": 1,
-    "title": "Zin van bewegen",
-    "pillar": "EtenDrinken",
-    "thumbnail": "http://example.com/example.jpg",
-    "short_description": "Letterlijk tussen de zee- en binnenvaartschepen ontdek jij het Rotterdamse havengebied. De indrukwekkende skyline glijdt aan je voorbij. En dan werven, dokken en oneindig veel containers…",
-    "is_user_wishlist_item": true,
-    "has_user_consumed_action": true,
-    "has_user_shared_experience": true,
-    "start_date":"2015-12-09T19:33:00 +0000",
-    "end_date": "2015-12-13T19:33:00 +0000",
-    "offers": {
-      "type": 1,
-      "offer": [
-        {
-          "title": "Voor 5 euro naar de dierentuin",
-          "percentage": 25.0,
-          "amount": 23.0
-        }
-      ]
-    },
-    "partner": {
-      "id": 1,
-      "name": "Spido",
-      "url": "http://spido.nl",
-      "phone_number": "010 42984039",
-      "email_address": "example@spido.nl",
-      "street": "Botenlaan",
-      "zipcode": "2343KJ",
-      "street_number": "45",
-      "region": "Rotterdam"
-    },
-    "locations": [
-      {
-        "id": 1,
-        "title": "Ballenbak",
-        "street": "Jan Luykenlaan",
-        "zipcode": "2343KJ",
-        "street_number": "8",
-        "region": "Rotterdam",
-        "latitude": 4.0000,
-        "longitude": 51.0000
-      }
-    ]
-  }
-}
-```
+### Status code
 
-
-### Request
-`PUT /api/{version}/users/me/savings`
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any usage with the 'action_id' and 'date_of_use'.
+200 | Everything is ok.
 
 
 ## Delete saving
