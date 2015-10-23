@@ -1343,105 +1343,6 @@ Code | Description
 
 A user can add a finished "Actie" and its savings manually.
 
-```
-Request endpoint Acceptatie:
-POST https://rotterdampas-acc.passcloud.nl/rest/postsaving/
-Request endpoint Productie:
-POST https://rotterdampas.passcloud.nl/rest/postsaving/
-```
-
-### Headers
-
-Header | Optional | Default | Description
------- | -------- | ------- | -----------
-X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
-pass_owner_code | false | RPAS | The code of the 'Organization'.
-api_version | false | 1 | The version number of the API.
-pass_type_number | false | 354 | The number of the 'PasSoort'.
-
-### Parameters
-
-Parameter | Type | Optional | Default | Description
---------- | ---- | -------- | ------- | -----------
-action_id | integer | verplicht | - | The id number of the action.
-amount | float | verplicht | - | The amount of the new saving.
-date_of_use | date | verplicht | - | The date of the new saving in format ISO 8601.
-pas_id | long | verplicht | - | The pas number of the new saving.
-
-
-> Request
-
-```json
-{
-  "action_id": 1,
-  "amount": 23.00,
-  "date_of_use": "2015-12-09T19:33:00 +0000",
-  "pas_id": 6011011325987,
-}
-```
-
-> Response
-
-```json
-{
-  "actual_savings": 40,
-  "date_of_use": "2015-12-09T19:33:00 +0000",
-  "calculated_savings": 40,
-  "post_saving_saving": [{
-    "post_saving_action_offers": [	{
-		"title": "Titel",
-		"percentage": 4.75,
-		"amount": 7.95
-	}],
-    "post_saving_action_partners": [{
-		"region": "Amsterdam",
-		"phone_number": "020-1234567",
-		"zipcode": "1102 AX",
-		"street": "Raoul Wallenbergstraat ",
-		"name": "Stadsloket Oost",
-		"street_number": "43",
-		"id_": 10238,
-		"url": "www.example.com",
-		"email_address": "contact@stichtingjuliusleeft.nl"
-    }],
-    "post_saving_action_locations": [	{
-		"id_": 545,
-		"title": "Amsterdam",
-		"street": "straat",
-		"zipcode": "4444 ZZ",
-		"street_number": "44",
-		"region": "Zuid-Holland",
-		"latitude": 999999,
-		"longitude": 999999
-	}],
-    "has_user_shared_experience": false,
-    "end_date": "2015-12-31T23:59:59 +0100",
-    "title": "NIK Stadspas 1",
-    "thumbnail": "www.example.com.example.png",
-    "short_description": "Volledige Vergoeding NIK 1 Stadspas Extra Korting",
-    "pillar": "Dienstverlening",
-    "id_": 501,
-    "start_date": "2015-02-01T00:00:00 +0100",
-    "has_user_consumed_action": false,
-    "is_user_wishlist_item": false
-  }],
-  "id_": 501
-}
-```
-
-### Status code
-
-Code | Description
----- | -----------
-400 | One or more mandatory parameters and/or headers are empty.
-401 | Wrong values in the basic authentication.
-401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
-403 | Can't find the 'PasSoort'.
-403 | Can't find the 'organization' of the pass.
-404 | Can't find any pass with 'pas_id'.
-404 | Can't find any action with 'action_id'.
-200 | Everything is ok.
-
 
 ## Update saving
 
@@ -1467,7 +1368,7 @@ pass_type_number | false | 354 | The number of the 'PasSoort'.
 
 Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
-action_id | integer | verplicht | - | The id number of the action.
+id_ | integer | verplicht | - | The id number of the saving.
 amount | float | verplicht | - | The new amount of the saving.
 date_of_use | date | verplicht | - | The date of the saving in format ISO 8601.
 
@@ -1475,7 +1376,7 @@ date_of_use | date | verplicht | - | The date of the saving in format ISO 8601.
 
 ```json
 {
-  "action_id": 1,
+  "id_": 7140,
   "amount": 23.00,
   "date_of_use": "2015-12-09T19:33:00 +0000"
 }
@@ -1492,17 +1393,52 @@ Code | Description
 401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
 403 | Can't find the 'PasSoort'.
 403 | Can't find the 'organization' of the pass.
-404 | Can't find any usage with the 'action_id' and 'date_of_use'.
+404 | Can't find any savings with the 'id_' and 'date_of_use'.
 200 | Everything is ok.
 
 
 ## Delete saving
 
+### Request
+
 A user can delete a finished "Actie" and its savings manually.
 
+```
+Request endpoint Acceptatie:
+PUT https://rotterdampas-acc.passcloud.nl/rest/deletesaving/
+Request endpoint Productie:
+PUT https://rotterdampas.passcloud.nl/rest/deletesaving/
+```
 
-### Request
-`DELETE /api/{version}/users/me/savings/{id}`
+### Headers
+
+Header | Optional | Default | Description
+------ | -------- | ------- | -----------
+X-AUTHENTICATION-TOKEN | false | - | The personal token of the user.
+pass_owner_code | false | RPAS | The code of the 'Organization'.
+api_version | false | 1 | The version number of the API.
+pass_type_number | false | 354 | The number of the 'PasSoort'.
+
+### Parameters
+
+Parameter | Type | Optional | Default | Description
+--------- | ---- | -------- | ------- | -----------
+id_ | integer | verplicht | - | The id number of the saving.
+
+> Response: Only returns a status code.
+
+### Status code
+
+Code | Description
+---- | -----------
+400 | One or more mandatory parameters and/or headers are empty.
+401 | Wrong values in the basic authentication.
+401 | There isn't a user linked to the given X-AUTHENTICATION-TOKEN.
+403 | Can't find the 'PasSoort'.
+403 | Can't find the 'organization' of the pass.
+404 | Can't find any savings with the 'id_'.
+200 | Everything is ok.
+
 
 # Wishlists
 
