@@ -158,7 +158,7 @@ Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
 password | string | false | - | A password for login.
 email_address | string | false | - | The emailaddress of the 'Pashouder'. This will be the login name.
-birthdate | string | false | - | The date of birth of the 'Pashouder'.
+birthdate | string | false | - | The date of birth of the 'Pashouder' in format ISO 8601.
 passnumber | long | false | - | The number of the pass that belongs to the 'Pashouder'.
 
 
@@ -547,7 +547,7 @@ filter_tags | string | true | - | If set, the result will be constrained by the 
 	}],
     "has_user_shared_experience": false,
     "title": "\"gratis toegang tot het Allard Pierson Museum voor Stadspashouders van 4 t/m 16 jaar\"",
-    "end_date": 1451602799000,
+    "end_date": "2016-08-31T23:59:59 +0200",
     "distance": 999999,
     "thumbnail": "http://example.com/example.jpg",
     "action_type": "A - Jaarkorting",
@@ -556,7 +556,7 @@ filter_tags | string | true | - | If set, the result will be constrained by the 
     "id_": 30281,
     "has_user_consumed_action": false,
     "is_user_wishlist_item": false,
-    "start_date": 1422745200000,
+    "start_date": "2015-07-22T00:00:00 +0200",
     "get_all_actions_actions_offers": [	{
 		"title": "Titel",
 		"percentage": 4.75,
@@ -654,7 +654,7 @@ id_ | integer | false | - | ID number of the specific action.
   }],
   "has_user_shared_experience": true,
   "more_information_phone_number": "020 763 0599",
-  "end_date": 1441058399000,
+  "end_date": "2016-08-31T23:59:59 +0200",
   "title": "Stadspas Aanbieding 100% Korting",
   "short_description": "Stadspasje Aanb. A",
   "availability_type": 2,
@@ -692,7 +692,7 @@ id_ | integer | false | - | ID number of the specific action.
   "id_": 30274,
   "more_information_url": "http://example.com",
   "reservation_email": "test@test.nl",
-  "start_date": 1422745200000,
+  "start_date": "2015-07-22T00:00:00 +0200",
   "is_user_wishlist_item": true,
   "has_user_consumed_action": false
 }
@@ -779,13 +779,13 @@ longitude | float | optioneel | - | If set, the actions are returned based on di
 		"email_address": "contact@stichtingjuliusleeft.nl"
     }],
     "title": "Volledige Vergoeding NIK 1 Stadspas Extra Korting",
-    "end_date": 1751407199000,
+    "end_date": "2016-08-31T23:59:59 +0200",
     "short_description": "NIK Stadspas 1",
     "pillar": "Dienstverlening",
     "id_": 30440,
     "is_user_wishlist_item": false,
     "has_user_consumed_action": true,
-    "start_date": 1433196000000
+    "start_date": "2015-07-22T00:00:00 +0200",
   }],
   "page": 1,
   "total_records": 1
@@ -848,7 +848,7 @@ meta | boolean | optioneel | false | If set, the body will not contain the resul
     "description": "Een stukje tekst",
     "rating": 7,
     "id_": 1,
-    "post_date": 1444643804811
+    "post_date": "2015-10-12T11:57:00 +0200"
   }],
   "page_size": 1,
   "average_review": 4.86,
@@ -909,7 +909,7 @@ description | string | optioneel | - | The description of the review.
   "description": "Een stukje tekst",
   "rating": 7,
   "id_": 1,
-  "post_date": 1444643820634
+  "post_date": "2015-10-12T11:57:00 +0200"
 }
 ```
 
@@ -983,7 +983,7 @@ description | string | optioneel | - | The (new) description of the review.
   "description": "een groter stukje tekst",
   "rating": 5,
   "id_": 1,
-  "post_date": 1444643820634
+  "post_date": "2015-10-12T11:57:00 +0200"
 }
 ```
 
@@ -1081,7 +1081,7 @@ year | integer | optioneel | - | If included, the results will constrained to th
   "page": 1,
   "get_user_actions_actions": [{
     "has_user_shared_experience": false,
-    "consumption_date": 1433376000000,
+    "consumption_date": "2015-06-04T02:00:00 +0200",
     "get_user_actions_actions_partners": [{
       "region": "Amsterdam",
       "phone_number": "020 820 8122",
@@ -1093,7 +1093,7 @@ year | integer | optioneel | - | If included, the results will constrained to th
       "url": "http://www.filmhallen.nl",
       "email_address": "bob@themovies.nl"
     }],
-    "end_date": 1441058399000,
+    "end_date": "2015-08-31T23:59:59 +0200",
     "title": "Gratis naar film1",
     "get_user_actions_actions_offers": [	{
 		"title": "Titel",
@@ -1114,7 +1114,7 @@ year | integer | optioneel | - | If included, the results will constrained to th
     "pillar": "Cultuur",
     "id_": 557,
     "is_user_wishlist_item": false,
-    "start_date": 1422745200000
+    "start_date": "2015-02-01T00:00:00 +0100"
   }],
   "total_records": 6
 }
@@ -1221,7 +1221,7 @@ per_page | integer | verplicht | - | The count of the results per page.
     "review_id": 3,
     "description": "Een stukje tekst",
     "rating": 4,
-    "post_date": 1445418601061
+    "post_date": "2015-05-01T02:00:00 +0200"
   }],
   "average_review": 4.833333333333333,
   "page": 1,
@@ -1278,9 +1278,9 @@ include_family | boolean | optioneel | false | If set, result will include famil
 {
   "get_savings_saving": [{
     "actual_savings": 9,
-    "date_of_use": 1433376000000,
+    "date_of_use": "2015-05-01T02:00:00 +0200",
     "get_savings_savings_actions": [{
-      "end_date": 1441058399000,
+      "end_date": "2015-12-31T23:59:59 +0100",
       "title": "Gratis naar film1",
       "thumbnail": "www.example.com/example.png",
       "get_savings_actions_offers": [	{
@@ -1303,7 +1303,7 @@ include_family | boolean | optioneel | false | If set, result will include famil
       "has_user_shared_experience": false,
       "pillar": "Cultuur",
       "id_": 557,
-      "start_date": 1422745200000,
+      "start_date": "2015-02-01T00:00:00 +0100",
       "has_user_consumed_action": false,
       "is_user_wishlist_item": false,
       "get_savings_actions_locations": [	{
@@ -1365,7 +1365,7 @@ Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
 action_id | integer | verplicht | - | The id number of the action.
 amount | float | verplicht | - | The amount of the new saving.
-date_of_use | date | verplicht | - | The date of the new saving.
+date_of_use | date | verplicht | - | The date of the new saving in format ISO 8601.
 pas_id | long | verplicht | - | The pas number of the new saving.
 
 
@@ -1375,7 +1375,7 @@ pas_id | long | verplicht | - | The pas number of the new saving.
 {
   "action_id": 1,
   "amount": 23.00,
-  "date_of_use": "2015-12-09T19:33:00 +0000"
+  "date_of_use": "2015-12-09T19:33:00 +0000",
   "pas_id": 6011011325987,
 }
 ```
@@ -1385,7 +1385,7 @@ pas_id | long | verplicht | - | The pas number of the new saving.
 ```json
 {
   "actual_savings": 40,
-  "date_of_use": 1440374400000,
+  "date_of_use": "2015-12-09T19:33:00 +0000",
   "calculated_savings": 40,
   "post_saving_saving": [{
     "post_saving_action_offers": [	{
@@ -1415,13 +1415,13 @@ pas_id | long | verplicht | - | The pas number of the new saving.
 		"longitude": 999999
 	}],
     "has_user_shared_experience": false,
-    "end_date": 1440374400000,
+    "end_date": "2015-12-31T23:59:59 +0100",
     "title": "NIK Stadspas 1",
     "thumbnail": "www.example.com.example.png",
     "short_description": "Volledige Vergoeding NIK 1 Stadspas Extra Korting",
     "pillar": "Dienstverlening",
     "id_": 501,
-    "start_date": 1440374400000,
+    "start_date": "2015-02-01T00:00:00 +0100",
     "has_user_consumed_action": false,
     "is_user_wishlist_item": false
   }],
@@ -1469,7 +1469,7 @@ Parameter | Type | Optional | Default | Description
 --------- | ---- | -------- | ------- | -----------
 action_id | integer | verplicht | - | The id number of the action.
 amount | float | verplicht | - | The new amount of the saving.
-date_of_use | date | verplicht | - | The date of the saving.
+date_of_use | date | verplicht | - | The date of the saving in format ISO 8601.
 
 > Request
 
@@ -1547,7 +1547,7 @@ per_page | integer | verplicht | - | The count of the results per page.
 			"percentage": 4.75,
 			"amount": 9.95
 		}],
-            "end_date": 1441058399000,
+            "end_date": "2015-12-31T23:59:59 +0100",
             "title": "Stadspasje Aanb. A",
             "short_description": "Stadspas Aanbieding 100% Korting",
             "has_user_shared_experience": true,
@@ -1574,7 +1574,7 @@ per_page | integer | verplicht | - | The count of the results per page.
 			"longitude": 57.00120155,
 			"latitude": 12.25369844
 		}],
-            "start_date": 1422745200000,
+            "start_date": "2015-02-01T00:00:00 +0100",
             "has_user_consumed_action": false,
             "is_user_wishlist_item": true
          }]
@@ -1643,7 +1643,7 @@ id_ | integer | verplicht | - | ID number of the specific action.
       }],
       "has_user_shared_experience": true,
       "title": "Stadspasje Aanb. A",
-      "end_date": 1441058399000,
+      "end_date": "2015-12-31T23:59:59 +0100",
       "short_description": "Stadspas Aanbieding 100% Korting",
       "get_wishlist_actions_offers": [	{
 		"title": "Titel",
@@ -1654,7 +1654,7 @@ id_ | integer | verplicht | - | ID number of the specific action.
       "id_": 270,
       "is_user_wishlist_item": true,
       "has_user_consumed_action": false,
-      "start_date": 1422745200000,
+      "start_date": "2015-02-01T00:00:00 +0100",
       "get_wishlist_actions_locations": [	{
 		"id_": 15,
 		"title": "Titel",
@@ -1936,17 +1936,17 @@ include_family | boolean | optioneel | false | If set, the result will include t
   "page": 1,
   "get_passes_passes": [
     {
-      "end_date": 1451606399000,
+      "end_date": "2017-01-01T00:59:59 +0100",
       "owner_name": "K. Janssen",
       "active": true,
-      "number": 6.011011329443E12,
+      "number": 6011011325987,
       "id_": 175310
     },
     {
-      "end_date": 1483228799000,
+      "end_date": "2017-01-01T00:59:59 +0100",
       "owner_name": "R Janssen",
       "active": true,
-      "number": 6.011011325987E12,
+      "number": 6011011325988,
       "id_": 175309
     }
   ],
