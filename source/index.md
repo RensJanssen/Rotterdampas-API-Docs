@@ -487,12 +487,19 @@ Remember — The results of this call can also be changed by using one of the gl
 
 ### Filter
 
-<aside class="warning">
-Filters are still a work in progress and open for discussion.
-</aside>
+The filters Kenmerken and Plaatsen are available in the service. The parameter filter_tags can be used for the Kenmerken and the parameter filter_city can be used for the Plaatsen. Tags filter is based on a numerically enumeration:
 
-Example — Filters are based on an Enum e.g. "Eten & Drinken" = 1, "Zonder kinderen" = 2 and are sent as a comma seperated string.
-These enums will translate to the "Pijler", Boolean flags of the "Acties", location regions and "Aanbiedingen" values.
+Number | Value
+------ | -----
+1 | Leuk met slecht weer
+2 | Leuk met goed weer
+3 | Leuk met kinderen
+4 | Leuk zonder kinderen
+5 | Is binnen actie
+
+Example string for the parameter filter_tags = “2,4,5”.
+For the cities we need the full names seperated by a comma. Example string for the parameter filter_city = “Rotterdam, Delft, Maasland”.
+
 
 `GET /api/{version}/actions?filter=1,3,6`
 
@@ -517,7 +524,9 @@ latitude | float | true | - | If set, the actions are returned based on distance
 longitude | float | true | - | If set, the actions are returned based on distance from the latitude & longitude. Only applies if both are set.
 partner_id | integer | true | - | If set, results are constrained to this partner id.
 action_type | string | true | - | If set, results are constrained to this action type.
-fuzzy_text | string | true | - | If set, the searchlist will be constraind by  matching the 'fuzzy_text' and the titels of the actions. 
+fuzzy_text | string | true | - | If set, the searchlist will be constrained by  matching the 'fuzzy_text' and the titels of the actions. 
+filter_city | string | true | - | If set, the result will be constrained by the given Plaatsen.
+filter_tags | string | true | - | If set, the result will be constrained by the given Kenmerken.
 
 > Response
 
