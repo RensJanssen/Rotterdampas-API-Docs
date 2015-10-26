@@ -1382,7 +1382,54 @@ date_of_use | date | verplicht | - | The date of the saving in format ISO 8601.
 }
 ```
 
-> Response: Only returns a status code.
+> Response
+
+```json
+{
+  "actual_savings": 100,
+  "date_of_use": "2015-07-16T02:00:00 +0200",
+  "calculated_savings": 40,
+  "id_": 7154,
+  "put_saving_saving": [{
+    "put_saving_action_locations": [	{
+		"id_": 545,
+		"title": "Amsterdam",
+		"street": "straat",
+		"zipcode": "4444 ZZ",
+		"street_number": "44",
+		"region": "Zuid-Holland",
+		"latitude": 999999,
+		"longitude": 999999
+	}],
+    "has_user_shared_experience": false,
+    "put_saving_action_partners": [{
+		"region": "Amsterdam",
+		"phone_number": "020-1234567",
+		"zipcode": "1102 AX",
+		"street": "Raoul Wallenbergstraat ",
+		"name": "Stadsloket Oost",
+		"street_number": "43",
+		"id_": 10238,
+		"url": "www.examplecom",
+		"email_address": "contact@stichtingjuliusleeft.nl"
+    }],
+    "end_date": "2025-07-01T23:59:59 +0200",
+    "title": "NIK Stadspas 1",
+    "thumbnail": "http://www.example.com",
+    "short_description": "Volledige Vergoeding NIK 1 Stadspas Extra Korting",
+    "put_saving_action_offers": [	{
+		"title": "Titel",
+		"percentage": 4.75,
+		"amount": 7.95
+	}],
+    "pillar": "Dienstverlening",
+    "id_": 501,
+    "start_date": "2015-06-02T00:00:00 +0200",
+    "has_user_consumed_action": true,
+    "is_user_wishlist_item": false
+  }]
+}
+```
 
 ### Status code
 
